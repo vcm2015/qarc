@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQRC General Information</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0f1a;
+    --paper:#f5f1ea;
+    --paper-2:#ebe5d8;
+    --accent:#b8860b;
+    --gold:#c9a227;
+    --muted:#5b5f6b;
+    --rule:#2a2f3d;
+    --rule-soft:#d8d2c5;
+    --soft-bg:#fff8e1;
+    --green:#1f6f43;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Fraunces', Georgia, serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.65;
+    font-size:18px;
+    font-variation-settings:"opsz" 14;
+  }
+
+  /* TOP BAR */
+  .topbar{
+    position:sticky;top:0;z-index:60;
+    background:rgba(11,15,26,0.97);
+    color:var(--paper);
+    padding:14px 28px;
+    border-bottom:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    backdrop-filter:saturate(140%) blur(6px);
+  }
+  .brand{
+    font-family:'Inter Tight', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    font-size:12px;
+    font-weight:600;
+  }
+  .brand b{color:var(--gold)}
+  .toggle{
+    display:inline-flex;background:#1a2030;border:1px solid #2a3144;border-radius:999px;padding:4px;
+  }
+  .toggle button{
+    border:0;background:transparent;color:#aab1c2;
+    font-family:'Inter Tight', sans-serif;
+    font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+    padding:6px 14px;border-radius:999px;cursor:pointer;font-weight:600;
+    transition:all .25s ease;
+  }
+  .toggle button.active{background:var(--gold);color:#0b0f1a}
+
+  /* HORIZONTAL MENU WITH DROPDOWNS */
+  .menu{
+    position:sticky;top:54px;z-index:55;
+    background:var(--paper);
+    border-bottom:1px solid var(--rule-soft);
+    padding:0;
+  }
+  .menu-inner{
+    max-width:1200px;margin:0 auto;
+    display:flex;align-items:stretch;
+    padding:0 8px;
+  }
+  @media (max-width:640px){
+    .menu-inner{overflow-x:auto;scrollbar-width:none;padding:0}
+    .menu-inner::-webkit-scrollbar{display:none}
+  }
+  .menu-group{
+    position:relative;
+    flex:0 0 auto;
+  }
+  .menu-trigger{
+    background:transparent;border:0;cursor:pointer;
+    padding:16px 22px;
+    font-family:'Inter Tight', sans-serif;
+    font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;
+    color:var(--muted);
+    border-bottom:3px solid transparent;
+    transition:color .2s ease, background .2s ease, border-color .2s ease;
+    display:flex;align-items:center;gap:10px;
+    white-space:nowrap;
+  }
+  .menu-trigger:hover,
+  .menu-group:hover .menu-trigger,
+  .menu-group.open .menu-trigger{
+    color:var(--ink);
+    background:rgba(184,134,11,0.06);
+  }
+  .menu-group.has-active .menu-trigger{
+    color:var(--ink);
+    border-bottom-color:var(--gold);
+  }
+  .menu-trigger .caret{
+    font-size:9px;color:var(--accent);
+    transition:transform .2s ease;
+    display:inline-block;
+  }
+  .menu-group:hover .menu-trigger .caret,
+  .menu-group.open .menu-trigger .caret{
+    transform:rotate(180deg);
+  }
+  .dropdown{
+    position:absolute;top:100%;left:0;
+    background:#fff;
+    min-width:260px;
+    border:1px solid var(--rule-soft);
+    border-top:0;
+    border-radius:0 0 4px 4px;
+    box-shadow:0 14px 36px -10px rgba(11,15,26,0.22);
+    opacity:0;visibility:hidden;
+    transform:translateY(-6px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:100;
+    padding:6px 0;
+  }
+  .menu-group:hover .dropdown,
+  .menu-group:focus-within .dropdown,
+  .menu-group.open .dropdown{
+    opacity:1;visibility:visible;transform:translateY(0);
+  }
+  .dropdown a{
+    display:flex;align-items:center;gap:12px;
+    padding:11px 20px;
+    font-family:'Inter Tight', sans-serif;
+    font-size:12px;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;
+    color:var(--muted);text-decoration:none;
+    border-left:3px solid transparent;
+    transition:color .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .dropdown a:hover{
+    color:var(--ink);
+    background:rgba(184,134,11,0.06);
+    border-left-color:var(--gold);
+  }
+  .dropdown a.active{
+    color:var(--ink);
+    border-left-color:var(--gold);
+    background:rgba(184,134,11,0.08);
+  }
+  .dropdown a .n{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;color:var(--accent);font-weight:500;
+    letter-spacing:0.02em;
+    min-width:18px;
+  }
+  @media (max-width:640px){
+    .menu-trigger{padding:14px 14px;font-size:11px;letter-spacing:0.1em}
+    .dropdown{min-width:220px}
+  }
+
+  /* HERO */
+  header.hero{
+    padding:80px 28px 60px;
+    max-width:1100px;margin:0 auto;
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .eyebrow{
+    font-family:'Inter Tight', sans-serif;
+    font-size:11px;letter-spacing:0.25em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:18px;
+    display:inline-block;border-bottom:2px solid var(--accent);padding-bottom:4px;
+  }
+  h1.title{
+    font-family:'Fraunces', serif;font-weight:500;
+    font-size:clamp(36px,5.4vw,68px);line-height:1.04;letter-spacing:-0.02em;
+    margin:0 0 24px;
+    font-variation-settings:"opsz" 96;
+  }
+  h1.title em{font-style:italic;color:var(--accent);font-weight:400}
+  .lede{
+    font-size:21px;line-height:1.55;color:#1c2233;max-width:760px;
+    border-left:3px solid var(--accent);padding-left:22px;
+  }
+  .meta{
+    margin-top:36px;display:flex;flex-wrap:wrap;gap:24px 40px;
+    font-family:'Inter Tight', sans-serif;font-size:13px;color:var(--muted);
+  }
+  .meta span b{color:var(--ink);font-weight:600;display:block;text-transform:uppercase;letter-spacing:0.12em;font-size:10px;margin-bottom:4px}
+
+  main{max-width:1100px;margin:0 auto;padding:60px 28px 100px}
+  section{margin-bottom:80px;scroll-margin-top:120px}
+  h2.section-title{
+    font-family:'Fraunces', serif;font-weight:500;
+    font-size:clamp(28px,3.6vw,42px);line-height:1.1;letter-spacing:-0.01em;
+    margin:0 0 8px;
+    font-variation-settings:"opsz" 72;
+  }
+  h2.section-title .num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;color:var(--accent);letter-spacing:0.1em;
+    display:block;margin-bottom:14px;font-weight:500;
+  }
+  .section-sub{
+    font-family:'Inter Tight', sans-serif;font-size:14px;color:var(--muted);
+    margin-bottom:32px;letter-spacing:0.02em;
+  }
+  h3{
+    font-family:'Fraunces', serif;font-weight:600;font-size:24px;
+    margin:36px 0 14px;letter-spacing:-0.005em;
+  }
+  h4{
+    font-family:'Inter Tight', sans-serif;font-weight:700;font-size:14px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);
+    margin:28px 0 12px;
+  }
+  p{margin:0 0 18px}
+  a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
+  a:hover{color:var(--accent)}
+  ul,ol{padding-left:22px}
+  ul li,ol li{margin-bottom:8px}
+
+  .info-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:24px;
+  }
+  @media (max-width:760px){.info-grid{grid-template-columns:1fr}}
+  .info-card{
+    background:#fff;padding:24px;border-radius:6px;
+    border:1px solid var(--rule-soft);
+  }
+  .info-card h4{margin-top:0}
+  .info-card .row{
+    display:grid;grid-template-columns:160px 1fr;gap:12px;
+    padding:10px 0;border-bottom:1px dashed var(--rule-soft);
+    font-size:15px;
+  }
+  .info-card .row:last-child{border-bottom:0}
+  .info-card .row b{
+    font-family:'Inter Tight', sans-serif;font-weight:600;font-size:12px;
+    letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);
+  }
+
+  table{
+    width:100%;border-collapse:collapse;margin:24px 0;
+    font-size:15px;background:#fff;border-radius:6px;overflow:hidden;
+    border:1px solid var(--rule-soft);
+  }
+  th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--rule-soft)}
+  th{
+    background:var(--ink);color:var(--paper);
+    font-family:'Inter Tight', sans-serif;font-weight:600;
+    font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+  }
+  tr:last-child td{border-bottom:0}
+  tr:nth-child(even) td{background:#faf8f3}
+  td.mono{font-family:'JetBrains Mono', monospace;font-size:14px}
+
+  .quote{
+    border-left:3px solid var(--accent);
+    padding:8px 0 8px 24px;margin:24px 0;
+    font-family:'Fraunces', serif;font-style:italic;font-size:19px;
+    color:#1c2233;font-variation-settings:"opsz" 24;
+  }
+  .quote cite{
+    display:block;margin-top:10px;font-style:normal;
+    font-family:'Inter Tight', sans-serif;font-size:12px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:500;
+  }
+
+  .pillars{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:24px 0;
+  }
+  .pillar{
+    background:#fff;border:1px solid var(--rule-soft);
+    border-top:4px solid var(--gold);
+    padding:22px;border-radius:4px;
+  }
+  .pillar h4{margin:0 0 8px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:17px;font-family:'Fraunces',serif;font-weight:600}
+  .pillar p{margin:0;font-size:14px;color:#3a3f4d;line-height:1.55}
+
+  .timeline{
+    border-left:2px solid var(--rule-soft);
+    padding-left:28px;margin:24px 0;position:relative;
+  }
+  .timeline .entry{
+    margin-bottom:32px;position:relative;
+  }
+  .timeline .entry::before{
+    content:"";position:absolute;left:-35px;top:8px;
+    width:12px;height:12px;border-radius:50%;
+    background:var(--gold);border:3px solid var(--paper);
+  }
+  .timeline .year{
+    font-family:'JetBrains Mono', monospace;font-size:13px;
+    color:var(--accent);letter-spacing:0.08em;font-weight:500;
+    margin-bottom:6px;
+  }
+  .timeline h4{
+    margin:0 0 8px;color:var(--ink);text-transform:none;letter-spacing:0;
+    font-family:'Fraunces',serif;font-size:19px;font-weight:600;
+  }
+  .timeline p{font-size:15px;margin:0;color:#2a2f3d}
+
+  .process-row{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:24px 0;
+    border:1px solid var(--rule-soft);border-radius:4px;overflow:hidden;background:#fff;
+  }
+  @media (max-width:760px){.process-row{grid-template-columns:1fr 1fr}}
+  .process-step{
+    padding:22px;border-right:1px solid var(--rule-soft);
+    position:relative;
+  }
+  .process-step:last-child{border-right:0}
+  @media (max-width:760px){
+    .process-step:nth-child(2n){border-right:0}
+    .process-step{border-bottom:1px solid var(--rule-soft)}
+  }
+  .process-step .step-num{
+    font-family:'JetBrains Mono', monospace;font-size:12px;
+    color:var(--accent);font-weight:500;margin-bottom:8px;display:block;
+  }
+  .process-step h4{
+    margin:0 0 6px;color:var(--ink);text-transform:none;letter-spacing:0;
+    font-family:'Fraunces',serif;font-size:17px;font-weight:600;
+  }
+  .process-step p{margin:0;font-size:13px;color:#3a3f4d;line-height:1.5}
+
+  .team-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin:24px 0;
+  }
+  .team-card{
+    background:#fff;border:1px solid var(--rule-soft);
+    padding:22px;border-radius:4px;text-align:center;
+  }
+  .team-card .avatar{
+    width:64px;height:64px;border-radius:50%;
+    margin:0 auto 14px;
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;color:#fff;font-size:24px;font-weight:600;
+  }
+  .team-card .name{
+    font-family:'Fraunces',serif;font-weight:600;font-size:17px;
+    color:var(--ink);margin-bottom:4px;
+  }
+  .team-card .role{
+    font-family:'Inter Tight',sans-serif;font-size:11px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--muted);font-weight:600;
+  }
+
+  .source-note{
+    background:#fff;border:1px solid var(--rule-soft);border-left:6px solid var(--gold);
+    padding:22px 26px;border-radius:4px;margin:24px 0;
+  }
+  .source-note .label{
+    font-family:'Inter Tight', sans-serif;font-size:11px;
+    letter-spacing:0.25em;text-transform:uppercase;font-weight:700;
+    color:var(--accent);margin-bottom:8px;
+  }
+  .source-note p{margin:0;color:#3a2e0a;font-size:15px}
+
+  .reg-card{
+    background:var(--ink);color:var(--paper);
+    padding:36px;border-radius:6px;margin:24px 0;
+    position:relative;overflow:hidden;
+  }
+  .reg-card::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(135deg,transparent 0%,transparent 60%,rgba(201,162,39,0.10) 100%);
+    pointer-events:none;
+  }
+  .reg-card h3{margin-top:0;color:var(--paper);font-size:24px}
+  .reg-card .row{
+    display:grid;grid-template-columns:200px 1fr;gap:14px;
+    padding:10px 0;border-bottom:1px dashed rgba(216,210,197,0.2);
+    font-size:15px;color:#d8d2c5;
+  }
+  .reg-card .row:last-child{border-bottom:0}
+  .reg-card .row b{
+    font-family:'Inter Tight', sans-serif;font-weight:600;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);
+  }
+  .reg-card .mono{font-family:'JetBrains Mono', monospace}
+  .reg-card a{color:var(--gold);text-decoration-color:var(--gold)}
+
+  .city-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:18px 0;
+  }
+  .city{
+    background:#fff;border:1px solid var(--rule-soft);
+    padding:14px 16px;border-radius:4px;
+    font-family:'Inter Tight',sans-serif;font-weight:500;font-size:14px;
+    color:var(--ink);text-align:center;
+  }
+  .city .label{
+    display:block;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin-bottom:4px;
+  }
+
+  footer{
+    border-top:1px solid var(--rule-soft);
+    padding:40px 28px;text-align:center;
+    font-family:'Inter Tight', sans-serif;font-size:12px;
+    color:var(--muted);letter-spacing:0.05em;
+    max-width:1100px;margin:0 auto;
+  }
+
+  /* language toggle visibility */
+  [data-lang="vi"]{display:none}
+  body.vi [data-lang="en"]{display:none}
+  body.vi [data-lang="vi"]{display:block}
+  body.vi span[data-lang="en"], body.vi b[data-lang="en"], body.vi em[data-lang="en"], body.vi a[data-lang="en"], body.vi cite[data-lang="en"]{display:none}
+  body.vi span[data-lang="vi"], body.vi b[data-lang="vi"], body.vi em[data-lang="vi"], body.vi a[data-lang="vi"], body.vi cite[data-lang="vi"]{display:inline}
+  body:not(.vi) span[data-lang="vi"], body:not(.vi) b[data-lang="vi"], body:not(.vi) em[data-lang="vi"], body:not(.vi) a[data-lang="vi"], body:not(.vi) cite[data-lang="vi"]{display:none}
+  body:not(.vi) span[data-lang="en"], body:not(.vi) b[data-lang="en"], body:not(.vi) em[data-lang="en"], body:not(.vi) a[data-lang="en"], body:not(.vi) cite[data-lang="en"]{display:inline}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="brand"><b>AQRC</b> · General Information</div>
+  <div class="toggle" role="group" aria-label="Language toggle">
+    <button id="btn-en" class="active" onclick="setLang('en')">English</button>
+    <button id="btn-vi" onclick="setLang('vi')">Tiếng Việt</button>
+  </div>
+</nav>
+
+<!-- HORIZONTAL MENU (ENGLISH) -->
+<div class="menu" data-lang="en">
+  <div class="menu-inner">
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">About <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#overview"><span class="n">01</span>Overview</a>
+        <a href="#leadership"><span class="n">02</span>Leadership</a>
+        <a href="#journey"><span class="n">03</span>Journey</a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Approach <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#philosophy"><span class="n">04</span>Philosophy</a>
+        <a href="#safehaven"><span class="n">05</span>Safe-haven Focus</a>
+        <a href="#quant"><span class="n">06</span>Quant Approach</a>
+        <a href="#system"><span class="n">07</span>System Framework</a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Operations <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#compliance"><span class="n">08</span>Compliance</a>
+        <a href="#security"><span class="n">09</span>Security</a>
+        <a href="#global"><span class="n">10</span>Global Presence</a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Participation <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#registration"><span class="n">11</span>Registration &amp; Account</a>
+        <a href="#deposit"><span class="n">12</span>Deposit</a>
+        <a href="#packages"><span class="n">13</span>Investment Packages</a>
+        <a href="#earnings"><span class="n">14</span>Earnings &amp; Withdrawal</a>
+        <a href="#team"><span class="n">15</span>Team &amp; Referral</a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Markets &amp; Vision <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#markets"><span class="n">16</span>Markets &amp; Regional Strategy</a>
+        <a href="#vision"><span class="n">17</span>Vision &amp; Roadmap</a>
+        <a href="#verification"><span class="n">18</span>Verification</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HORIZONTAL MENU (VIETNAMESE) -->
+<div class="menu" data-lang="vi">
+  <div class="menu-inner">
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Giới thiệu <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#overview"><span class="n">01</span>Tổng quan</a>
+        <a href="#leadership"><span class="n">02</span>Lãnh đạo</a>
+        <a href="#journey"><span class="n">03</span>Hành trình</a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Cách tiếp cận <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#philosophy"><span class="n">04</span>Triết lý</a>
+        <a href="#safehaven"><span class="n">05</span>Tài sản trú ẩn</a>
+        <a href="#quant"><span class="n">06</span>Định lượng</a>
+        <a href="#system"><span class="n">07</span>Khung hệ thống</a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Vận hành <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#compliance"><span class="n">08</span>Tuân thủ</a>
+        <a href="#security"><span class="n">09</span>Bảo mật</a>
+        <a href="#global"><span class="n">10</span>Toàn cầu</a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Tham gia <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#registration"><span class="n">11</span>Đăng ký &amp; Tài khoản</a>
+        <a href="#deposit"><span class="n">12</span>Nạp tiền</a>
+        <a href="#packages"><span class="n">13</span>Gói đầu tư</a>
+        <a href="#earnings"><span class="n">14</span>Lợi nhuận &amp; Rút tiền</a>
+        <a href="#team"><span class="n">15</span>Đội nhóm &amp; Giới thiệu</a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <button class="menu-trigger" type="button" aria-haspopup="true">Thị trường &amp; Tầm nhìn <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#markets"><span class="n">16</span>Chiến lược thị trường</a>
+        <a href="#vision"><span class="n">17</span>Tầm nhìn &amp; Lộ trình</a>
+        <a href="#verification"><span class="n">18</span>Kiểm tra</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ENGLISH ===================== -->
+<div data-lang="en">
+
+<header class="hero">
+  <span class="eyebrow">Company Information · 2026</span>
+  <h1 class="title">AQRC — Applied Quantitative <em>Research Capital</em></h1>
+  <p class="lede">
+    AQRC is a quantitative asset management brand operated by ASPIRANT TRADE INC, focused on safe-haven assets — primarily gold, silver and short-duration US Treasury bonds — through systematic, model-driven strategies. This document compiles the company's published background, philosophy, structure, compliance posture and operational footprint for prospective members, partners and community leaders.
+  </p>
+  <div class="meta">
+    <span><b>Brand</b>AQRC (Applied Quantitative Research Capital)</span>
+    <span><b>Operating Entity</b>ASPIRANT TRADE INC</span>
+    <span><b>Chief Executive</b>Mr. Teh Kian Wee</span>
+    <span><b>Sector</b>Quantitative · safe-haven asset arbitrage</span>
+    <span><b>Operating Since</b>2019</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- 01 Overview -->
+  <section id="overview">
+    <h2 class="section-title"><span class="num">§ 01</span>Overview</h2>
+    <p class="section-sub">A snapshot of who AQRC is and what it does, as described by the company.</p>
+
+    <p>AQRC (Applied Quantitative Research Capital) is led by Chief Executive Officer Mr. Teh Kian Wee, bringing together a group of professionals with extensive experience in the global financial markets, including Thomas, Hans Müller, Jan Kowalski and Johan Nilsson. Unlike the "star trader" model prevalent in the market, all members of the team have long careers at top international financial institutions. The team focuses on macroeconomic strategy framework, quantitative model development and long-term capital management, committed to providing global investors with stable and professional quantitative solutions for safe-haven assets.</p>
+
+    <p>The company operates from Greenwich, Connecticut — the heart of the global hedge fund industry — with its legal entity ASPIRANT TRADE INC registered in Colorado, USA, and an Asia-Pacific operations centre established in Hefei, Anhui Province, China.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>At a glance</h4>
+        <div class="row"><b>Brand</b><span>AQRC — Applied Quantitative Research Capital</span></div>
+        <div class="row"><b>Operating entity</b><span>ASPIRANT TRADE INC</span></div>
+        <div class="row"><b>Entity registered</b><span>Colorado, USA</span></div>
+        <div class="row"><b>Entity founded</b><span>10 October 2018</span></div>
+        <div class="row"><b>Brand operating</b><span>Since 2019</span></div>
+        <div class="row"><b>Brand HQ context</b><span>Greenwich, Connecticut, USA</span></div>
+        <div class="row"><b>Stated AUM</b><span>US$187 billion</span></div>
+        <div class="row"><b>Stated clients</b><span>Financial institutions and conglomerates</span></div>
+      </div>
+      <div class="info-card">
+        <h4>Stated focus areas</h4>
+        <div class="row"><b>Asset focus</b><span>Gold, silver, short-duration US Treasury bonds</span></div>
+        <div class="row"><b>Strategy core</b><span>Quantitative model development, cross-market arbitrage, volatility structure</span></div>
+        <div class="row"><b>Risk approach</b><span>Volatility stratification, risk-first system design</span></div>
+        <div class="row"><b>Operating model</b><span>SMA (Separate Management Account)</span></div>
+        <div class="row"><b>Engine</b><span>0.03-second high-speed trading engine</span></div>
+        <div class="row"><b>Data transmission</b><span>BEP-20 protocol, encrypted</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Leadership -->
+  <section id="leadership">
+    <h2 class="section-title"><span class="num">§ 02</span>Leadership Team</h2>
+    <p class="section-sub">Core management team, as introduced in AQRC's company materials.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar">TK</div>
+        <div class="name">Teh Kian Wee</div>
+        <div class="role">Chief Executive Officer</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar">TH</div>
+        <div class="name">Thomas</div>
+        <div class="role">Investment Director</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar">HM</div>
+        <div class="name">Hans Müller</div>
+        <div class="role">Investment Manager</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar">JK</div>
+        <div class="name">Jan Kowalski</div>
+        <div class="role">Asset Allocation Manager</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar">JN</div>
+        <div class="name">Johan Nilsson</div>
+        <div class="role">Investment Manager</div>
+      </div>
+    </div>
+
+    <p>The company describes its senior management as hedge fund executives with extensive investment experience, skilled in quantitative strategy analysis, asset allocation and swing trading. AQRC indicates that a Zoom meeting with CEO Mr. Teh Kian Wee can be arranged for serious prospective partners and community leaders on request.</p>
+  </section>
+
+  <!-- 03 Journey -->
+  <section id="journey">
+    <h2 class="section-title"><span class="num">§ 03</span>Founder's Journey</h2>
+    <p class="section-sub">From academic enlightenment to building an institutional quantitative system.</p>
+
+    <div class="timeline">
+      <div class="entry">
+        <div class="year">2005 — 2007</div>
+        <h4>Quantitative enlightenment at top academic institutions</h4>
+        <p>Mr. Teh Kian Wee graduated with a degree in Financial Engineering from a world-renowned university, systematically studying quantitative economics and financial modelling. His research focused on the unique value of gold as a non-credit asset in the modern financial system.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2008 — 2010</div>
+        <h4>Market tempering during the financial crisis</h4>
+        <p>Joined the Commodities Research Department of a leading international investment bank and experienced first-hand the severe market volatility and liquidity crisis of 2008. This experience cemented his view that, when risky-asset correlations converge, safe-haven assets such as gold are the only effective ballast.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2011 — 2013</div>
+        <h4>Transformation from research to practical application</h4>
+        <p>Transferred to the core Proprietary Trading Department, developing quantitative strategies for precious metals and related derivatives. Built arbitrage strategies targeting spot–futures spreads and cross-market spreads, achieving stable returns in live trading.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2014 — 2015</div>
+        <h4>"Safe-haven asset expert" status established</h4>
+        <p>His "Volatility Stratification-based Safe-haven Asset Allocation Framework" was adopted as one of the institution's internal standard allocation methods, establishing his reputation as a new-generation global expert in safe-haven assets and macroeconomic strategies.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2016 — 2017</div>
+        <h4>Team convergence and quantitative restructuring</h4>
+        <p>Met Thomas, Hans Müller, Jan Kowalski and Johan Nilsson, forming the core five-person team around a shared belief in instrumentalising and popularising professional safe-haven asset strategies. The team systematically restructured prior strategies and back-tested nearly 15 years of global precious-metals data.</p>
+      </div>
+      <div class="entry">
+        <div class="year">10 October 2018</div>
+        <h4>Founding of ASPIRANT TRADE INC</h4>
+        <p>To realise their shared ideals, the team officially registered and established the asset management company ASPIRANT TRADE INC in Greenwich, Connecticut — context the company describes as "the heart of the global hedge fund industry."</p>
+      </div>
+      <div class="entry">
+        <div class="year">2019 — 2021</div>
+        <h4>AQRC brand independence and strategic upgrade</h4>
+        <p>The professional quantitative team led by Mr. Teh Kian Wee officially launched services to global investors under the AQRC brand. In 2020, AQRC obtained the US MSB Financial License, becoming a quantitative asset management institution focused on safe-haven assets that holds this compliance license.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2022 — 2023</div>
+        <h4>Mature operation and EU UCITS launch</h4>
+        <p>In 2023 AQRC launched its first batch of fund products compliant with EU UCITS standards, expanding access for European institutional and individual investors. The team continues to iterate trading algorithms and risk models, with a next-generation quantitative arbitrage strategy for safe-haven assets emphasising return stability and risk control.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2024</div>
+        <h4>Three-layer arbitrage strategy iteration</h4>
+        <p>The three-layer arbitrage strategy (Arbitrage, Trend, Leverage Enhancement) was iterated, with continued optimisation of algorithms and refinement of the global quantitative hedging ecosystem.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2026</div>
+        <h4>New user experience program</h4>
+        <p>A new user experience program was launched, with the system opening for registrations from 14 April 2026 in an internal testing phase, while algorithms and the global quantitative hedging ecosystem continue to be optimised.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Philosophy -->
+  <section id="philosophy">
+    <h2 class="section-title"><span class="num">§ 04</span>Founder's Philosophy</h2>
+    <p class="section-sub">Five principles that guide AQRC's strategy design and operations.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <h4>Institutional capability</h4>
+        <p>Personal capabilities fade with time, but institutional capabilities do not. Any capability that cannot be institutionalised is not suitable as a long-term reliance.</p>
+      </div>
+      <div class="pillar">
+        <h4>Risk first</h4>
+        <p>The real risk is not drawdown, but drawdown that exceeds the recoverable range. Returns are only a result; risk boundaries are the starting point of design.</p>
+      </div>
+      <div class="pillar">
+        <h4>Discipline over courage</h4>
+        <p>The market has never rewarded courage, but discipline. Long-term capital survives not by making correct judgments, but by the absence of systemic errors.</p>
+      </div>
+      <div class="pillar">
+        <h4>Leverage as efficiency</h4>
+        <p>Leverage is not a source of returns, but a tool for efficiency. The essence of investment is not to beat the market, but to manage uncertainty.</p>
+      </div>
+      <div class="pillar">
+        <h4>Stress-tested systems</h4>
+        <p>The value of a system depends on its performance under stressful conditions. Market rewards discipline over courage.</p>
+      </div>
+    </div>
+
+    <div class="quote">
+      "We safeguard not only our clients' assets, but also the rigorous quantitative investment methodology that has stood the test of the market for a long time."
+      <cite>— AQRC corporate statement</cite>
+    </div>
+  </section>
+
+  <!-- 05 Safe-haven -->
+  <section id="safehaven">
+    <h2 class="section-title"><span class="num">§ 05</span>Why Safe-haven Assets</h2>
+    <p class="section-sub">Two decades of anchoring certainty — the rationale for AQRC's narrow asset focus.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>The starting point of belief (2008)</h4>
+        <p>Personal experience of the 2008 financial crisis convinced Mr. Teh Kian Wee that, in a global credit crisis, only assets like gold — which do not rely on the credit of any government — serve as the ultimate guardians of wealth.</p>
+      </div>
+      <div class="info-card">
+        <h4>Strategy validation (2011 – 2015)</h4>
+        <p>Subsequent quantitative research repeatedly verified the irreplaceability of safe-haven assets in investment portfolios: hedging inflation, combating market volatility and providing liquidity in extreme conditions.</p>
+      </div>
+      <div class="info-card">
+        <h4>The original aspiration of independence (2018)</h4>
+        <p>The founding of ASPIRANT TRADE INC was specifically intended to build an undisturbed platform for the long-term, pure operation of this mature quantitative logic for safe-haven assets.</p>
+      </div>
+      <div class="info-card">
+        <h4>The mission of the era (Future)</h4>
+        <p>AQRC anchors its strategy in gold and silver — hard assets that the company believes have stood the test of millennia — as the most solid foundation for investors' long-term compound returns.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Quant approach -->
+  <section id="quant">
+    <h2 class="section-title"><span class="num">§ 06</span>Quantitative Approach</h2>
+    <p class="section-sub">From "human judgment" to "institutional certainty."</p>
+
+    <h3>What quantitative trading is — in AQRC's framing</h3>
+    <p>According to AQRC's published explainer, quantitative trading does not predict the market; it manages uncertainty. Traditional trading is described as emotion-driven, while quantitative trading is probability-driven. In a trillion-level, cross-time-zone global market, the company argues, individual capabilities alone no longer constitute an advantage — the binding risk becomes the inability to quantify and constrain the entire decision-making system.</p>
+
+    <h3>The ceiling of discretionary trading</h3>
+    <p>AQRC identifies three core risks for capital pursuing long-term stability: a decision-making system that cannot be quantified, rules that cannot be constrained, and fragmented experience combined with emotional volatility. In its view, as the market expands to trillion-level scale and operates across time zones, volatility and uncertainty are magnified exponentially — making quantitative trading "an inevitable choice" for long-term capital.</p>
+
+    <h3>From "smarter" to "more reliable"</h3>
+    <p>Where traditional logic relies on human conditions (emotion, experience, judgment) as the source of returns, AQRC's quantitative logic separates the decision-making process from human instability and entrusts it to models and probabilistic structures for execution. Returns no longer depend on a single correct judgment but on the consistency of the system under different market conditions — what the company calls the transfer of decision-making sovereignty from humans to institutions.</p>
+
+    <h3>Risk is defined prior to returns</h3>
+    <p>AQRC describes its quantitative system as coding risk into the system before the strategy is executed: maximum position boundary, maximum drawdown cap, exposure control mechanism, and an automatic position-reduction path in extreme scenarios. Returns can only be generated within the scope allowed by the risk budget — risk is therefore not an object to be managed, but a prerequisite for system operation.</p>
+
+    <h3>Process nodes</h3>
+    <div class="process-row">
+      <div class="process-step">
+        <span class="step-num">Node 01</span>
+        <h4>Identify conditions</h4>
+        <p>When a certain structure emerges in the market.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Node 02</span>
+        <h4>Define boundaries</h4>
+        <p>Under what risk constraints the trade may proceed.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Node 03</span>
+        <h4>Determine scale</h4>
+        <p>The size of the trade to execute.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Node 04</span>
+        <h4>High-speed execution</h4>
+        <p>The speed required to complete the trade.</p>
+      </div>
+    </div>
+
+    <p>AQRC summarises this as: "Quantitative trading does not answer 'Will the market rise or fall next?', but answers 'How will the system respond regardless of market changes?'"</p>
+  </section>
+
+  <!-- 07 System -->
+  <section id="system">
+    <h2 class="section-title"><span class="num">§ 07</span>The Quantitative System Framework</h2>
+    <p class="section-sub">Returns come from repeating structures — and from a collaborative strategy framework.</p>
+
+    <h3>Three categories of structural return sources</h3>
+    <p>AQRC's materials identify three recurring market structures that the system continuously monitors, treating phased deviations as the natural outcomes of the global financial system under different stress states:</p>
+
+    <table>
+      <thead><tr><th>Structure</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><b>Phased deviation of prices</b></td><td>Temporary mispricing patterns that recur across cycles.</td></tr>
+        <tr><td><b>Cross-market mismatch of liquidity</b></td><td>Differences in liquidity conditions across markets and venues.</td></tr>
+        <tr><td><b>Imbalance of volatility surface</b></td><td>Asymmetries in the implied-volatility structure of related instruments.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>A mature quantitative system as a collaborative framework</h3>
+    <p>AQRC describes its mature system as a collaboration of complementary strategy layers, where returns stem from the relay operation of different strategies across different cycles:</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <h4>Cash-futures arbitrage</h4>
+        <p>Provides a low-risk spread source by exploiting differentials between spot and futures pricing.</p>
+      </div>
+      <div class="pillar">
+        <h4>Cross-market arbitrage</h4>
+        <p>Improves the efficiency of liquidity utilisation across multiple markets and time zones.</p>
+      </div>
+      <div class="pillar">
+        <h4>Volatility structure strategy</h4>
+        <p>Captures risk premium embedded in volatility surface asymmetries.</p>
+      </div>
+      <div class="pillar">
+        <h4>Relay operation</h4>
+        <p>Returns do not depend on any single market state — strategies hand off across cycles.</p>
+      </div>
+    </div>
+
+    <h3>Long-cycle advantages</h3>
+    <p>AQRC argues that the advantages of quantitative trading belong to the long cycle: any system relying on individual capabilities will experience decay over time. The migration path the company describes is: capabilities shift from humans to institutions; experience is converted into rules; intuition is transformed into probability. Quantitative systems thereby maintain consistency amid personnel turnover and market changes.</p>
+
+    <h3>Institutional evolution of asset management</h3>
+    <p>The company frames quantitative trading as more than a technological upgrade — it is described as an evolution of asset management forms, moving from a Heroic Era (individual talent) through a Team Era to a System Era (system operation). In this framing, what truly matters is no longer who is better at judging market trends, but whose system can operate sustainably in an uncertain environment.</p>
+  </section>
+
+  <!-- 08 Compliance -->
+  <section id="compliance">
+    <h2 class="section-title"><span class="num">§ 08</span>Compliance & Regulation</h2>
+    <p class="section-sub">Licensing and the regulatory framework as published by AQRC.</p>
+
+    <p>AQRC publishes the following compliance posture in its company materials. The US MSB Financial License is registered through the US Department of the Treasury's Financial Crimes Enforcement Network (FinCEN), and the company invites prospective members to verify the registration directly through the official FinCEN MSB Registrant Search system.</p>
+
+    <div class="reg-card">
+      <h3>Official registration record</h3>
+      <div class="row"><b>Company legal name</b><span>ASPIRANT TRADE INC</span></div>
+      <div class="row"><b>Place of registration</b><span>Colorado, USA</span></div>
+      <div class="row"><b>MSB registration number</b><span class="mono">31000323474515</span></div>
+      <div class="row"><b>Registering authority</b><span>FinCEN — US Department of the Treasury</span></div>
+      <div class="row"><b>Public lookup system</b><span><a href="https://www.fincen.gov/resources/msb-state-selector" target="_blank" rel="noopener">fincen.gov/resources/msb-state-selector</a></span></div>
+      <div class="row"><b>How to verify</b><span>Enter the MSB Registration Number / DCN <span class="mono">31000323474515</span> in the FinCEN search and click Search to retrieve the file in real time.</span></div>
+    </div>
+
+    <h3>SMA — Separate Management Account model</h3>
+    <p>According to AQRC, the company operates under an SMA (Separate Management Account) model, separating ownership and management of funds in order to ensure that client assets are kept independent and segregated.</p>
+
+    <h3>UCITS standards (2023)</h3>
+    <p>In 2023, AQRC launched its first batch of fund products compliant with EU UCITS standards, with the stated objective of expanding access for European institutional and individual investors to its safe-haven asset strategies.</p>
+
+    <h3>Platform transparency (planned)</h3>
+    <p>The company states that, in later stages — after optimising the core functions of the app — some transaction data will be encrypted and displayed in the app's backend, expanding the content that members can independently review.</p>
+  </section>
+
+  <!-- 09 Security -->
+  <section id="security">
+    <h2 class="section-title"><span class="num">§ 09</span>Security Advantages</h2>
+    <p class="section-sub">Compliance, technical and asset-side protections as described by AQRC.</p>
+
+    <h4>I. Compliance and Regulation</h4>
+    <p>AQRC holds a US MSB financial license, describing itself as compliant and regulated. It adopts an SMA (Separate Management Account) model, separating ownership and management of funds to ensure that assets remain independent and secure.</p>
+
+    <h4>II. Technical Protection</h4>
+    <p>The platform uses the BEP-20 protocol for encrypted transmission, intended to prevent data leakage and tampering. The trading layer is supported by a 0.03-second high-speed trading engine connected to international investment bank liquidity. A three-tiered risk gate system applies:</p>
+
+    <div class="process-row">
+      <div class="process-step">
+        <span class="step-num">Gate 01</span>
+        <h4>Pre-event</h4>
+        <p>Stress testing of positions and scenarios before exposure is taken.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Gate 02</span>
+        <h4>In-event</h4>
+        <p>Risk isolation while a trade or strategy is running.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Gate 03</span>
+        <h4>Post-event</h4>
+        <p>Automatic protection mechanisms after the event.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Result</span>
+        <h4>Systematic control</h4>
+        <p>Risk is systematically controlled across the trade lifecycle.</p>
+      </div>
+    </div>
+
+    <h4>III. Asset Protection</h4>
+    <p>AQRC describes diversified hedging and arbitrage across markets, including gold and US Treasury bonds, intended to smooth market volatility. Position bonuses with compound interest are designed to enhance risk resistance, and independent dedicated accounts are provided as dual protection for privacy and assets.</p>
+  </section>
+
+  <!-- 10 Global -->
+  <section id="global">
+    <h2 class="section-title"><span class="num">§ 10</span>Global & Asia-Pacific Footprint</h2>
+    <p class="section-sub">Where AQRC operates and where its communities are active.</p>
+
+    <h3>Brand and entity context</h3>
+    <p>AQRC operates from a Greenwich, Connecticut context — described by the company as the heart of the global hedge fund industry — with its legal entity ASPIRANT TRADE INC registered in Colorado, USA.</p>
+
+    <h3>Asia-Pacific operations centre</h3>
+    <p>An operations centre has been established in Asia, specifically in Hefei, Anhui Province, located at:</p>
+    <div class="quote">
+      30th Floor, Phoenix Cultural Plaza, Huizhou Avenue, Changqing Street, Baohe District, Hefei City, Anhui Province, China.
+      <cite>— AQRC Asia-Pacific operations centre</cite>
+    </div>
+
+    <h3>Active community cities in China</h3>
+    <p>In addition to Hefei, AQRC indicates that community members and company-supported community offices have been developed in the following Chinese cities:</p>
+    <div class="city-grid">
+      <div class="city"><span class="label">CN</span>Hohhot</div>
+      <div class="city"><span class="label">CN</span>Hefei</div>
+      <div class="city"><span class="label">CN</span>Guangzhou</div>
+      <div class="city"><span class="label">CN</span>Wuhu</div>
+      <div class="city"><span class="label">CN</span>Huaihua</div>
+      <div class="city"><span class="label">CN</span>Zibo</div>
+      <div class="city"><span class="label">CN</span>Harbin</div>
+      <div class="city"><span class="label">CN</span>Yancheng</div>
+      <div class="city"><span class="label">CN</span>Huaibei</div>
+      <div class="city"><span class="label">CN</span>Huai'an</div>
+      <div class="city"><span class="label">CN</span>Nanyang</div>
+    </div>
+
+    <p>The company continues to connect with new markets and publishes daily market updates for each region via the Debox chat software.</p>
+
+    <h3>Communications & community tools</h3>
+    <p>Members and community offices coordinate daily through the Debox chat application, where AQRC publishes regional market updates. The official app is being upgraded to make it easier for users to chat, hold group chats, send USDT red envelopes and view the development of members across various communities.</p>
+  </section>
+
+  <!-- 11 Registration -->
+  <section id="registration">
+    <h2 class="section-title"><span class="num">§ 11</span>Registration &amp; Account</h2>
+    <p class="section-sub">Account creation flow as documented in AQRC's official new-user operation guide.</p>
+
+    <p>AQRC indicates that all operations are supported only on the official AQRC mobile App, downloaded from designated official channels. The App has no web version. An invitation code is a mandatory field for registration. Members can start with a minimum of 100 USD.</p>
+
+    <h3>Registration steps</h3>
+    <div class="process-row">
+      <div class="process-step">
+        <span class="step-num">Step 01</span>
+        <h4>Open the App</h4>
+        <p>Tap [New User] and enter your commonly used email address.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Step 02</span>
+        <h4>Username</h4>
+        <p>Set a 6–8 character username (letters + numbers, non-repeating).</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Step 03</span>
+        <h4>Password</h4>
+        <p>Set an 8–21 character password (letters, numbers and underscores only — no special symbols).</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Step 04</span>
+        <h4>Invitation code</h4>
+        <p>Fill in a 6-character invitation code (letters + numbers, mandatory).</p>
+      </div>
+    </div>
+
+    <p>Slide right to complete the puzzle verification, and tick to confirm that you have read and agreed to the User Agreement. After successful registration, log in to the App directly with your [Username + Password].</p>
+
+    <div class="source-note">
+      <div class="label">Source: AQRC security reminder</div>
+      <p>Platform staff will never request sensitive information such as private keys, passwords or verification codes.</p>
+    </div>
+  </section>
+
+  <!-- 12 Deposit -->
+  <section id="deposit">
+    <h2 class="section-title"><span class="num">§ 12</span>Deposit</h2>
+    <p class="section-sub">Digital asset deposit flow as documented by AQRC.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Accepted token &amp; network</h4>
+        <div class="row"><b>Token</b><span>USDT (Tether) only</span></div>
+        <div class="row"><b>Network</b><span>BEP-20 recommended by default (fast arrival, low handling fee)</span></div>
+        <div class="row"><b>Minimum</b><span>100 USD to start a quantitative journey</span></div>
+        <div class="row"><b>Address</b><span>Each account has a unique exclusive recharge address generated by the system</span></div>
+        <div class="row"><b>Arrival</b><span>Real-time display in [Available Balance] upon blockchain confirmation</span></div>
+      </div>
+      <div class="info-card">
+        <h4>Deposit steps</h4>
+        <p>1. After logging in, tap [Wallet] on the homepage.</p>
+        <p>2. Tap the blue [Recharge] button on the "Transfer Operation" page.</p>
+        <p>3. Confirm the network (BEP-20) and copy the exclusive recharge address.</p>
+        <p>4. Transfer USDT from your personal digital wallet/exchange to that address.</p>
+        <p>5. Wait for blockchain confirmation; funds appear in [Available Balance] in real time on arrival. Recharge details can be viewed in the upper-right corner.</p>
+      </div>
+    </div>
+
+    <div class="source-note">
+      <div class="label">Source: AQRC operational note (verbatim)</div>
+      <p>Please ensure the network and address are consistent, otherwise funds cannot be recovered.</p>
+    </div>
+  </section>
+
+  <!-- 13 Investment Packages -->
+  <section id="packages">
+    <h2 class="section-title"><span class="num">§ 13</span>Investment Packages</h2>
+    <p class="section-sub">The eight asset packages as published by AQRC in its official new-user operation guide.</p>
+
+    <p>AQRC offers eight asset packages covering different lock-up cycles, with core parameters (cycle / expected daily yield / position bonus) clearly displayed. The company recommends that new users choose short-term packages first.</p>
+
+    <h3>Product matrix &amp; expected returns</h3>
+    <table>
+      <thead>
+        <tr><th>Package name</th><th>Pledge cycle</th><th>Expected daily yield</th><th>Compound APY (reference)</th><th>Position bonus</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cash Type</td><td>Flexible in &amp; out</td><td class="mono">0.1% – 0.3%</td><td class="mono">44% – 199%</td><td>None</td></tr>
+        <tr><td>Inflation Hedge Type</td><td>30 days</td><td class="mono">0.4% – 0.6%</td><td class="mono">330% – 793%</td><td>None</td></tr>
+        <tr><td>Precious Metal Type</td><td>60 days</td><td class="mono">0.5% – 0.8%</td><td class="mono">520% – 1,750%</td><td>None</td></tr>
+        <tr><td>Volatility Arbitrage Type</td><td>90 days</td><td class="mono">0.6% – 1.0%</td><td class="mono">793% – 3,750%</td><td>5%</td></tr>
+        <tr><td>Capital Efficiency Enhanced Type</td><td>180 days</td><td class="mono">0.7% – 1.1%</td><td class="mono">1,187% – 5,440%</td><td>10%</td></tr>
+        <tr><td>Institutional Flagship All-in-One Type</td><td>360 days</td><td class="mono">0.8% – 1.3%</td><td class="mono">1,750% – 11,450%</td><td>15%</td></tr>
+        <tr><td>Composite Capital All-in-One Type</td><td>540 days</td><td class="mono">0.9% – 1.5%</td><td class="mono">2,570% – 23,800%</td><td>20%</td></tr>
+        <tr><td>Sovereign Alpha Matrix</td><td>1,080 days</td><td class="mono">1.0% – 1.8%</td><td class="mono">3,750% – 71,200%</td><td>20%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>How to pledge</h3>
+    <ol>
+      <li>From the App homepage, tap [Plans] and select an asset package in the "Quantitative Asset Portfolio" section.</li>
+      <li>Tap the chosen package to view the investment portfolio ratio and risk reminder.</li>
+      <li>Enter the pledge amount (minimum 100 USD, within your available balance).</li>
+      <li>The system automatically calculates the position bonus (up to 20%).</li>
+      <li>Confirm the information and tap [Pledge Now]. Funds will be locked, and earnings calculation starts the next day.</li>
+    </ol>
+
+    <h3>Redemption rule</h3>
+    <p>Except for the Cash Type (flexible in &amp; out), advance redemption is not supported for other asset packages. AQRC recommends selecting a cycle based on your fund usage plan.</p>
+
+    <div class="source-note">
+      <div class="label">Source: AQRC Risk Disclosure (verbatim)</div>
+      <p><b>Investment involves risks, please make decisions prudently.</b> Quantitative arbitrage is not a principal-guaranteed and fixed-return product. Although the risk is relatively low, market fluctuations may still lead to losses. Please rationally plan the investment amount according to your own risk tolerance, and do not invest funds beyond your bearing capacity. Please be sure to download the App and conduct operations through official channels, be alert to phishing websites and fraudulent activities, and protect the security of your account and funds.</p>
+    </div>
+  </section>
+
+  <!-- 14 Earnings & Withdrawal -->
+  <section id="earnings">
+    <h2 class="section-title"><span class="num">§ 14</span>Earnings, Compounding &amp; Withdrawal</h2>
+    <p class="section-sub">Earnings tracking, the compound-interest mechanism, transfer and withdrawal procedures.</p>
+
+    <h3>Earnings tracking</h3>
+    <ul>
+      <li><b>Account summary:</b> Tap [Track] in the bottom navigation to view estimated total assets, today's earnings change and remaining pledge days in real time.</li>
+      <li><b>Pledge details:</b> Tap a portfolio on the [Track] page to view product allocation ratio, ESG rating and cumulative profit and loss.</li>
+      <li><b>Fund details:</b> Enter [Wallet] on the homepage to view all transaction records.</li>
+    </ul>
+
+    <h3>Automatic compound interest mechanism</h3>
+    <p>The system enables the automatic compound interest mode by default. <b>If the daily premium earnings are not manually withdrawn, they will be automatically credited to the principal the next day to participate in quantitative arbitrage — the longer the pledge, the higher the compound interest growth rate.</b></p>
+    <p><b>After withdrawing any amount of earnings, the compound interest mechanism will be cancelled automatically, and only the initial principal + bonus will continue to generate earnings thereafter.</b></p>
+
+    <h3>Transfer &amp; withdrawal</h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Internal transfer</h4>
+        <p>Tap [Transfer] on the [Track] page to transfer funds between the "Plan Account" and "Wallet Account".</p>
+        <p><b>A 5% handling fee is charged for transfer out (early withdrawal) before the maturity date.</b> The principal is automatically released upon maturity.</p>
+      </div>
+      <div class="info-card">
+        <h4>External withdrawal</h4>
+        <p>Enter [Homepage] → [Wallet] → [Withdraw], select the network (BEP-20), enter the amount and your personal wallet address.</p>
+        <p>The system processes the request automatically, and the funds usually arrive within a few minutes.</p>
+      </div>
+    </div>
+
+    <h3>Fee summary (as published)</h3>
+    <table>
+      <thead><tr><th>Action</th><th>Fee</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>Early withdrawal (transfer-out before maturity)</td><td class="mono">5%</td><td>Handling fee on the principal portion before lock-up ends.</td></tr>
+        <tr><td>Withdrawal at/after maturity</td><td class="mono">0%</td><td>No handling fee for withdrawing principal and earnings after the pledge cycle ends.</td></tr>
+        <tr><td>Any withdrawal of earnings</td><td>—</td><td>Per AQRC: compound interest mechanism is cancelled automatically; only initial principal + bonus continue to generate earnings thereafter.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>FAQ (from AQRC's published guide)</h3>
+    <ul>
+      <li><b>Forgot password:</b> Tap [Forgot Password] on the login page, enter your registered email, and reset after receiving the verification code. No manual review required.</li>
+      <li><b>Position bonus withdrawal:</b> The position bonus is credited to principal to participate in earnings calculation, and can be withdrawn together with principal and earnings after the pledge rules are met.</li>
+      <li><b>Advance redemption:</b> Not supported except for Cash Type.</li>
+      <li><b>Asset package details:</b> Tap the corresponding asset package in [Plans] to view the specific asset allocation ratio (e.g., gold / US Treasuries / TIPS, etc.), strategy positioning and risk reminder.</li>
+    </ul>
+  </section>
+
+  <!-- 15 Team & Referral -->
+  <section id="team">
+    <h2 class="section-title"><span class="num">§ 15</span>Team &amp; Referral</h2>
+    <p class="section-sub">Invitation, team-binding, dashboard and additional in-app features.</p>
+
+    <h3>Invitation</h3>
+    <ol>
+      <li>Go to [My Page] → [Invite Friends].</li>
+      <li>Copy your 6-character exclusive invitation code or save the invitation QR code.</li>
+      <li>When friends register via your code/QR and complete deposit and pledge, <b>they become your team members, and the binding is permanent after completion.</b></li>
+    </ol>
+
+    <h3>Team data dashboard</h3>
+    <p>Go to [My Page] → [Market View] to see:</p>
+    <ul>
+      <li>Total team pledge amount, new members, today's new investment;</li>
+      <li>Performance details of the "big market / small market", number of team brokers;</li>
+      <li>Real-time data such as <b>hierarchical earnings, broker earnings and partner dividends.</b></li>
+    </ul>
+
+    <p>As referenced in <a href="#markets">§16 Markets &amp; Regional Strategy</a>, an internal CRM customer management module within the APP — visible only to senior partners — tracks deposit retention rate and compound growth curves across <b>15-generation teams</b>.</p>
+
+    <h3>Personal-centre basics</h3>
+    <ul>
+      <li><b>Change username:</b> [My Page] → [Change Username] — reset with letters and numbers.</li>
+      <li><b>Change password:</b> [My Page] → [Change Password] — receive verification code via registered email.</li>
+      <li><b>Languages supported:</b> Chinese, English, Japanese, Korean, Spanish.</li>
+      <li><b>Pricing units:</b> USD / CNY / EUR / USDT.</li>
+      <li><b>Notifications:</b> Enable [Message Notifications] to receive platform announcements and earnings alerts.</li>
+    </ul>
+
+    <h3>Additional in-app features</h3>
+    <h4>Global real-time market monitoring</h4>
+    <p>Tap [Market] in the bottom navigation. Switch between Popular Products, Commodities (Gold / Crude Oil / Natural Gas / Copper), Forex, Stocks and Indices. Latest quote, 24-hour price change and trading volume are displayed; the market dashboard surfaces the dynamics of the 12.8 trillion US dollar safe-haven market.</p>
+
+    <h4>EA Demo</h4>
+    <p>Tap [EA Demo] on the [Homepage]. Monitor real-time gold spread fluctuations across more than 10 top global platforms and view historical records of the system's 0.03-second transactions.</p>
+
+    <h4>VISA Credit Card</h4>
+    <p>Tap [Credit Card] on the [Homepage]. Users submit an application independently (fill in information → information review → delivery of physical card). Quantitative profits can be transferred to the card for consumption at 40 million merchants worldwide and ATM cash withdrawal.</p>
+  </section>
+
+  <!-- 16 Markets & Regional Strategy -->
+  <section id="markets">
+    <h2 class="section-title"><span class="num">§ 16</span>Markets &amp; Regional Strategy</h2>
+    <p class="section-sub">AQRC's published regional execution plan — Northeast Asia, Southeast Asia and the high-net-worth conversion roadmap.</p>
+
+    <p>AQRC publishes a regional execution plan structured around quarterly milestones and a tiered community studio model. The plan covers Japan and South Korea as core profit areas for overseas expansion, with Vietnam and Malaysia as Southeast Asian growth markets, alongside an internal grid-based commander system for community operations.</p>
+
+    <h3>Q3 — Northeast Asia (Japan &amp; South Korea)</h3>
+    <p>Following the global launch conference, Japan and South Korea are expected to be the core profit areas for overseas expansion. In the Japanese market, a KOL matrix incubation program will be launched, leveraging Line's private community for targeted penetration of high-net-worth clients. In the South Korean market, a private investment sharing session format will be adopted, bypassing traditional promotion models, and a localized operations committee composed of senior financial professionals from Seoul and Busan will be established.</p>
+
+    <h4>Product support — Northeast Asia</h4>
+    <ul>
+      <li>Simplified user interface launched for Japanese and South Korean users.</li>
+      <li>A dynamic hedging asset package exclusive to the Asian time zone rolled out on a gray-scale basis.</li>
+      <li>A dedicated fiat currency deposit OTC exchange channel established for K-VVIPs, to ensure a smooth experience for large fund inflows and outflows.</li>
+    </ul>
+
+    <h3>Q3 — Southeast Asia (Vietnam &amp; Malaysia)</h3>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Vietnam market</h4>
+        <p>Focusing on high-explosive community growth, the execution team will expand to <b>Ho Chi Minh City, Hanoi, Da Nang</b> and other frontline promotional areas, rapidly acquiring long-tail traffic through frequent small-to-medium-sized promotional events and comprehensive publicity.</p>
+      </div>
+      <div class="info-card">
+        <h4>Malaysia market</h4>
+        <p>Leveraging the network of Chinese chambers of commerce in <b>Penang and Kuala Lumpur</b> to extend high-end business, focusing on developing a partner system primarily composed of Chinese.</p>
+      </div>
+    </div>
+
+    <h3>Strengthening the Asian Base — Grid-based commander system</h3>
+    <p>Further implementing the grid-based commander system in China, Japan, South Korea and Southeast Asia, and completing the listing of dozens of high-standard community studios. Studios are managed using a three-tiered (A, B, C) system, with A-level studios equipped with dedicated strategy analysts assigned by the platform for on-site support.</p>
+
+    <h4>Conversion upgrade</h4>
+    <p>Studios are fully upgraded to become conversion hubs for high-net-worth clients. Multiple exclusive yacht club and golf wealth salon events, exclusively for senior partners, are jointly held in China and Southeast Asia. Through high-profile offline social scenarios, the stated goal is the conversion from retail deposits of tens of thousands of US dollars to institutional deposits of millions of US dollars per transaction, driving a step-by-step leap in overall asset management scale.</p>
+
+    <h4>Product support — Asian base</h4>
+    <p>An internal CRM customer management module, visible only to senior partners, is launched within the APP, helping sales leaders accurately track the deposit retention rate and compound growth curve of their <b>15-generation teams</b>, greatly improving team management efficiency.</p>
+
+    <h3>Q4 — Product upgrade and high-net-worth market</h3>
+    <p>A family office service specialist team for the Asia-Pacific region is established to fully launch precise circle-based marketing. In collaboration with offshore trust architects, the company aims to provide high-net-worth clients with assets in the tens of millions of US dollars with closed-loop solutions for overseas investment and hedging asset allocation. At the end of the year, an exclusive, invitation-only annual hedging asset summit is held at high-end private clubs in Hong Kong or Singapore to secure strategic clients for the following year.</p>
+
+    <h4>Product evolution</h4>
+    <p>Based on core user feedback from the first three quarters, the institutional-grade professional dashboard <b>AQRC Pro</b> is launched. This version requires an account net asset value to reach a specific threshold for unlocking and provides more detailed heatmaps of underlying asset holdings and visualised quantitative return reports.</p>
+
+    <h4>Customised services for ultra-high-net-worth</h4>
+    <p>For ultra-high-net-worth individuals, AQRC launches the <b>Sovereign Alpha Matrix+</b> customised version. This allows clients to customise lock-up periods and risk exposures within a certain range, providing one-on-one dedicated customer service and strategy support, completely breaking through from mass wealth management to high-end asset management.</p>
+  </section>
+
+  <!-- 17 Vision -->
+  <section id="vision">
+    <h2 class="section-title"><span class="num">§ 17</span>Vision & Roadmap</h2>
+    <p class="section-sub">Where AQRC says it is going next.</p>
+
+    <h3>Expansion into Vietnam and Southeast Asia</h3>
+    <p>AQRC states that its expansion into more countries — including Vietnam — is part of preparation for a planned Nasdaq listing in 2029 or 2030. Although the parent entity was registered as early as 2018, AQRC began operating in 2019, with stated assets under management of US$187 billion serving financial institutions and conglomerates. A sufficient user base is described as a prerequisite for the planned listing, prompting the company's stated plan to open up the Asian and Southeast Asian markets by 2025.</p>
+
+    <h3>System status</h3>
+    <p>On 14 April 2026, the system began accepting registrations. The system is described as still in an internal testing phase, with many functions not yet complete. Member chat and group chat functions are expected to be completed by the end of May. Other features being prepared include enabling trading contracts, launching U-card application functions, and a U-card shopping mall function.</p>
+
+    <h3>Stage of the project</h3>
+    <p>AQRC describes itself as currently in the very early stages, working with leaders and core members of various countries and communities to jointly develop and build its quantitative arbitrage brand and reputation.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Planned milestones</h4>
+        <div class="row"><b>2025</b><span>Opening of Asian and Southeast Asian markets</span></div>
+        <div class="row"><b>14 Apr 2026</b><span>System opened for registrations (internal testing phase)</span></div>
+        <div class="row"><b>End May 2026</b><span>Member chat and group chat completion (planned)</span></div>
+        <div class="row"><b>Upcoming</b><span>Trading contracts; U-card application; U-card shopping mall</span></div>
+        <div class="row"><b>2029 / 2030</b><span>Targeted Nasdaq listing</span></div>
+      </div>
+      <div class="info-card">
+        <h4>Stated positioning</h4>
+        <div class="row"><b>Operating since</b><span>2019</span></div>
+        <div class="row"><b>Stated AUM</b><span>US$187 billion</span></div>
+        <div class="row"><b>Stated clients</b><span>Financial institutions and conglomerates</span></div>
+        <div class="row"><b>Brand stage</b><span>Very early stages — community / partner build phase</span></div>
+        <div class="row"><b>Engagement model</b><span>Country leaders and core community members</span></div>
+      </div>
+    </div>
+
+    <h3>Long-term vision</h3>
+    <p>AQRC describes its long-term vision as building a global, auditable, verifiable, cross-economic-cycle and long-term trustworthy quantitative investment hub for safe-haven assets.</p>
+
+    <h3>Yearly roadmap 2027 — 2030</h3>
+
+    <div class="timeline">
+      <div class="entry">
+        <div class="year">2027</div>
+        <h4>Compliance expansion in Europe and the US &amp; global business school empowerment</h4>
+        <p>Building upon the US MSB license, the company plans to gradually advance regulatory compliance applications in Europe and the Middle East, initiating localised operations in the European and American markets. The existing ground sales network is to be upgraded into a global business school system, providing batch training for quantitative marketing specialists globally through standardised video courses and offline lectures by renowned instructors — upgrading the customer acquisition model from referrals to systematic cultivation. Expected scale: the platform's active user base and assets under management to enter the top tier of the industry.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2028</div>
+        <h4>Cross-cycle giants &amp; diversified underlying assets</h4>
+        <p>Beyond traditional precious metals and US Treasuries, more low-correlation safe-haven asset classes are to be introduced to further enrich the underlying arbitrage matrix and enhance the product's resilience and profitability in extreme global macroeconomic environments. Brand upgrade: strengthening AQRC's image as a leading expert in quantitative hedging assets by sponsoring global financial summits and publishing industry research white papers.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2029</div>
+        <h4>Institutional service expansion and ecosystem opening</h4>
+        <p>Leveraging AQRC's capital pool and quantitative models, the company plans to launch corporate business — providing quantitative strategies and liquidity management services to other traditional financial institutions and trust funds — achieving an extension from individual investors to corporate institutions.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2030</div>
+        <h4>Capitalisation and ecosystem mastery</h4>
+        <p>The company plans capitalisation operations, including listing the parent company on traditional capital markets, providing broader value realisation paths for early core partners and promotion leaders. The stated final form: completing the ultimate transformation from a single quantitative wealth management product to a global hedging asset cross-cycle investment infrastructure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 Verification -->
+  <section id="verification">
+    <h2 class="section-title"><span class="num">§ 18</span>Verification & Contact</h2>
+    <p class="section-sub">How to verify AQRC's compliance registration and engage with the team.</p>
+
+    <h3>Verifying the MSB registration in 4 steps</h3>
+    <ol>
+      <li>Open the official FinCEN query system of the US Government: <a href="https://www.fincen.gov/resources/msb-state-selector" target="_blank" rel="noopener">fincen.gov/resources/msb-state-selector</a>.</li>
+      <li>On the search page, locate the field labelled <b>"MSB Registration Number / DCN"</b>.</li>
+      <li>Enter the registration number: <b><span style="font-family:'JetBrains Mono',monospace">31000323474515</span></b> (avoid spelling errors).</li>
+      <li>Click <b>Search</b> at the bottom — the system retrieves the file in real time.</li>
+    </ol>
+
+    <div class="source-note">
+      <div class="label">Public registry record</div>
+      <p>The matching record returned will show: <b>Company Legal Name: ASPIRANT TRADE INC · MSB Registration Number: 31000323474515 · Place of Registration: Colorado, USA.</b></p>
+    </div>
+
+    <h3>Meeting the CEO</h3>
+    <p>The company indicates that a Zoom meeting with CEO Mr. Teh Kian Wee can be arranged on request for serious prospective members, partners and community leaders, to discuss the company background, methodology and partnership opportunities directly.</p>
+
+    <h3>Daily market communication</h3>
+    <p>Regional market updates and daily community communication are conducted via the Debox chat application. Country leaders and community offices coordinate with the central AQRC team through this channel.</p>
+  </section>
+
+  <div class="source-note">
+    <div class="label">Source note</div>
+    <p>The content of this document is compiled from materials published by AQRC, including the company's published founder background and philosophy deck, its "What is Quantitative Trading" explainer, and its company information memo with FinCEN MSB lookup details. Readers are encouraged to verify each statement directly via the FinCEN lookup link above and via direct communication with the company.</p>
+  </div>
+
+</main>
+
+<footer>
+  AQRC General Information · Compiled from company-published materials · <span style="color:var(--accent)">© 2026</span>
+</footer>
+
+</div>
+
+<!-- ===================== VIETNAMESE ===================== -->
+<div data-lang="vi">
+
+<header class="hero">
+  <span class="eyebrow">Thông tin công ty · 2026</span>
+  <h1 class="title">AQRC — Applied Quantitative <em>Research Capital</em></h1>
+  <p class="lede">
+    AQRC là một thương hiệu quản lý tài sản định lượng được vận hành bởi ASPIRANT TRADE INC, tập trung vào tài sản trú ẩn — chủ yếu là vàng, bạc và trái phiếu kho bạc Mỹ ngắn hạn — thông qua các chiến lược có hệ thống, dựa trên mô hình. Tài liệu này tổng hợp bối cảnh, triết lý, cấu trúc, tư thế tuân thủ và dấu chân vận hành đã được công ty công bố, dành cho thành viên tiềm năng, đối tác và các trưởng cộng đồng.
+  </p>
+  <div class="meta">
+    <span><b>Thương hiệu</b>AQRC (Applied Quantitative Research Capital)</span>
+    <span><b>Pháp nhân vận hành</b>ASPIRANT TRADE INC</span>
+    <span><b>Tổng Giám đốc</b>Ông Teh Kian Wee</span>
+    <span><b>Lĩnh vực</b>Quant · arbitrage tài sản trú ẩn</span>
+    <span><b>Hoạt động từ</b>2019</span>
+  </div>
+</header>
+
+<main>
+
+  <section id="overview">
+    <h2 class="section-title"><span class="num">§ 01</span>Giới thiệu</h2>
+    <p class="section-sub">Tóm lược AQRC là ai và làm gì, theo như công ty mô tả.</p>
+
+    <p>AQRC (Applied Quantitative Research Capital) được dẫn dắt bởi Tổng Giám đốc Ông Teh Kian Wee, quy tụ một nhóm chuyên gia có kinh nghiệm rộng trên thị trường tài chính toàn cầu, bao gồm Thomas, Hans Müller, Jan Kowalski và Johan Nilsson. Khác với mô hình "star trader" phổ biến trên thị trường, các thành viên của đội ngũ đều có sự nghiệp dài tại các định chế tài chính quốc tế hàng đầu. Đội ngũ tập trung vào khung chiến lược vĩ mô, phát triển mô hình định lượng và quản lý vốn dài hạn, cam kết cung cấp cho nhà đầu tư toàn cầu các giải pháp định lượng ổn định và chuyên nghiệp cho tài sản trú ẩn.</p>
+
+    <p>Công ty hoạt động từ Greenwich, Connecticut — trung tâm của ngành quỹ phòng hộ toàn cầu — với pháp nhân ASPIRANT TRADE INC đăng ký tại Colorado, Mỹ, và một trung tâm vận hành Châu Á – Thái Bình Dương đặt tại Hợp Phì, tỉnh An Huy, Trung Quốc.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Khái quát</h4>
+        <div class="row"><b>Thương hiệu</b><span>AQRC — Applied Quantitative Research Capital</span></div>
+        <div class="row"><b>Pháp nhân vận hành</b><span>ASPIRANT TRADE INC</span></div>
+        <div class="row"><b>Nơi đăng ký</b><span>Colorado, Mỹ</span></div>
+        <div class="row"><b>Ngày thành lập</b><span>10/10/2018</span></div>
+        <div class="row"><b>Thương hiệu hoạt động</b><span>Từ năm 2019</span></div>
+        <div class="row"><b>Bối cảnh trụ sở</b><span>Greenwich, Connecticut, Mỹ</span></div>
+        <div class="row"><b>AUM công bố</b><span>187 tỷ USD</span></div>
+        <div class="row"><b>Khách hàng công bố</b><span>Các định chế tài chính và tập đoàn</span></div>
+      </div>
+      <div class="info-card">
+        <h4>Trọng tâm hoạt động</h4>
+        <div class="row"><b>Tài sản trọng tâm</b><span>Vàng, bạc, trái phiếu kho bạc Mỹ ngắn hạn</span></div>
+        <div class="row"><b>Chiến lược cốt lõi</b><span>Phát triển mô hình định lượng, arbitrage liên thị trường, cấu trúc biến động</span></div>
+        <div class="row"><b>Cách tiếp cận rủi ro</b><span>Phân lớp biến động, thiết kế hệ thống đặt rủi ro trước</span></div>
+        <div class="row"><b>Mô hình vận hành</b><span>SMA (Separate Management Account)</span></div>
+        <div class="row"><b>Engine giao dịch</b><span>Tốc độ 0,03 giây</span></div>
+        <div class="row"><b>Truyền dữ liệu</b><span>Mã hoá theo giao thức BEP-20</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="leadership">
+    <h2 class="section-title"><span class="num">§ 02</span>Đội ngũ lãnh đạo</h2>
+    <p class="section-sub">Đội ngũ quản lý cốt lõi, theo giới thiệu trong tài liệu của AQRC.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar">TK</div>
+        <div class="name">Teh Kian Wee</div>
+        <div class="role">Tổng Giám đốc Điều hành</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar">TH</div>
+        <div class="name">Thomas</div>
+        <div class="role">Giám đốc Đầu tư</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar">HM</div>
+        <div class="name">Hans Müller</div>
+        <div class="role">Quản lý Đầu tư</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar">JK</div>
+        <div class="name">Jan Kowalski</div>
+        <div class="role">Quản lý Phân bổ Tài sản</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar">JN</div>
+        <div class="name">Johan Nilsson</div>
+        <div class="role">Quản lý Đầu tư</div>
+      </div>
+    </div>
+
+    <p>Công ty mô tả ban lãnh đạo cấp cao là các giám đốc quỹ phòng hộ có kinh nghiệm đầu tư rộng, thông thạo phân tích chiến lược định lượng, phân bổ tài sản và swing trading. AQRC cho biết có thể sắp xếp cuộc họp Zoom với Tổng Giám đốc Ông Teh Kian Wee theo yêu cầu, dành cho các đối tác tiềm năng nghiêm túc và các trưởng cộng đồng.</p>
+  </section>
+
+  <section id="journey">
+    <h2 class="section-title"><span class="num">§ 03</span>Hành trình của Nhà sáng lập</h2>
+    <p class="section-sub">Từ nền tảng học thuật tới việc xây dựng một hệ thống định lượng cấp tổ chức.</p>
+
+    <div class="timeline">
+      <div class="entry">
+        <div class="year">2005 — 2007</div>
+        <h4>Khai mở định lượng tại các định chế học thuật hàng đầu</h4>
+        <p>Ông Teh Kian Wee tốt nghiệp ngành Kỹ thuật Tài chính từ một đại học danh tiếng, học một cách hệ thống về kinh tế lượng và mô hình hoá tài chính. Nghiên cứu của ông tập trung vào giá trị độc đáo của vàng như một tài sản phi tín dụng trong hệ thống tài chính hiện đại.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2008 — 2010</div>
+        <h4>Tôi luyện qua khủng hoảng tài chính</h4>
+        <p>Gia nhập bộ phận Nghiên cứu Hàng hoá của một ngân hàng đầu tư quốc tế hàng đầu và trải nghiệm trực tiếp sự biến động dữ dội và khủng hoảng thanh khoản năm 2008. Trải nghiệm này củng cố quan điểm rằng khi tương quan tài sản rủi ro hội tụ, tài sản trú ẩn như vàng là "ballast" hiệu quả duy nhất.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2011 — 2013</div>
+        <h4>Từ nghiên cứu sang ứng dụng thực tế</h4>
+        <p>Chuyển sang bộ phận Proprietary Trading cốt lõi, phát triển chiến lược định lượng cho kim loại quý và các sản phẩm phái sinh liên quan. Xây dựng các chiến lược arbitrage chênh lệch giao ngay – tương lai và chênh lệch liên thị trường, đạt lợi nhuận ổn định trong giao dịch thực.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2014 — 2015</div>
+        <h4>Khẳng định vị thế "Chuyên gia tài sản trú ẩn"</h4>
+        <p>"Khung Phân bổ Tài sản Trú ẩn dựa trên Phân lớp Biến động" do ông đề xuất được chấp nhận là một trong những phương pháp phân bổ chuẩn nội bộ của định chế, xác lập danh tiếng của ông như một chuyên gia toàn cầu thế hệ mới về tài sản trú ẩn và chiến lược vĩ mô.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2016 — 2017</div>
+        <h4>Hội tụ đội ngũ và tái cấu trúc định lượng</h4>
+        <p>Gặp Thomas, Hans Müller, Jan Kowalski và Johan Nilsson, hình thành nhóm cốt lõi 5 người trên niềm tin chung về "công cụ hoá và phổ cập các chiến lược tài sản trú ẩn chuyên nghiệp." Đội ngũ tái cấu trúc các chiến lược trước đó và backtest gần 15 năm dữ liệu thị trường kim loại quý toàn cầu.</p>
+      </div>
+      <div class="entry">
+        <div class="year">10/10/2018</div>
+        <h4>Thành lập ASPIRANT TRADE INC</h4>
+        <p>Để hiện thực hoá lý tưởng chung, đội ngũ chính thức đăng ký và thành lập công ty quản lý tài sản ASPIRANT TRADE INC tại Greenwich, Connecticut — bối cảnh được công ty mô tả là "trung tâm của ngành quỹ phòng hộ toàn cầu."</p>
+      </div>
+      <div class="entry">
+        <div class="year">2019 — 2021</div>
+        <h4>Thương hiệu AQRC độc lập và nâng cấp chiến lược</h4>
+        <p>Đội ngũ định lượng chuyên nghiệp dẫn dắt bởi Ông Teh Kian Wee chính thức ra mắt dịch vụ tới nhà đầu tư toàn cầu dưới thương hiệu AQRC. Năm 2020, AQRC được cấp Giấy phép Tài chính US MSB, trở thành định chế quản lý tài sản định lượng tập trung vào tài sản trú ẩn nắm giữ giấy phép tuân thủ này.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2022 — 2023</div>
+        <h4>Vận hành trưởng thành và ra mắt UCITS EU</h4>
+        <p>Năm 2023, AQRC ra mắt nhóm sản phẩm quỹ đầu tiên tuân thủ chuẩn UCITS của EU, mở rộng khả năng tiếp cận cho nhà đầu tư tổ chức và cá nhân châu Âu. Đội ngũ tiếp tục lặp lại các thuật toán giao dịch và mô hình rủi ro, với chiến lược arbitrage thế hệ tiếp theo cho tài sản trú ẩn nhấn mạnh tính ổn định lợi nhuận và kiểm soát rủi ro.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2024</div>
+        <h4>Lặp lại chiến lược arbitrage 3 lớp</h4>
+        <p>Chiến lược arbitrage 3 lớp (Arbitrage, Trend, Leverage Enhancement) được lặp lại, với việc tiếp tục tối ưu thuật toán và hoàn thiện hệ sinh thái phòng vệ định lượng toàn cầu.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2026</div>
+        <h4>Chương trình trải nghiệm người dùng mới</h4>
+        <p>Khởi động chương trình trải nghiệm người dùng mới, hệ thống mở đăng ký từ 14/4/2026 trong giai đoạn thử nghiệm nội bộ, trong khi thuật toán và hệ sinh thái phòng vệ định lượng toàn cầu tiếp tục được tối ưu.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="philosophy">
+    <h2 class="section-title"><span class="num">§ 04</span>Triết lý của Nhà sáng lập</h2>
+    <p class="section-sub">Năm nguyên tắc dẫn dắt thiết kế chiến lược và vận hành của AQRC.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <h4>Năng lực tổ chức</h4>
+        <p>Năng lực cá nhân phai theo thời gian, nhưng năng lực tổ chức thì không. Mọi năng lực không thể tổ chức hoá thì không phù hợp để dựa vào dài hạn.</p>
+      </div>
+      <div class="pillar">
+        <h4>Rủi ro đặt trước</h4>
+        <p>Rủi ro thực sự không phải là drawdown, mà là drawdown vượt quá phạm vi có thể phục hồi. Lợi nhuận chỉ là kết quả; ranh giới rủi ro là điểm xuất phát của thiết kế.</p>
+      </div>
+      <div class="pillar">
+        <h4>Kỷ luật hơn lòng can đảm</h4>
+        <p>Thị trường chưa bao giờ thưởng cho lòng can đảm, mà thưởng cho kỷ luật. Vốn dài hạn tồn tại không phải vì phán đoán đúng, mà vì không có lỗi hệ thống.</p>
+      </div>
+      <div class="pillar">
+        <h4>Đòn bẩy là công cụ</h4>
+        <p>Đòn bẩy không phải là nguồn lợi nhuận, mà là công cụ tăng hiệu quả. Bản chất đầu tư không phải đánh bại thị trường, mà quản lý sự bất định.</p>
+      </div>
+      <div class="pillar">
+        <h4>Hệ thống đã chịu áp lực</h4>
+        <p>Giá trị của một hệ thống phụ thuộc vào hiệu suất trong điều kiện căng thẳng. Thị trường thưởng cho kỷ luật hơn là lòng can đảm.</p>
+      </div>
+    </div>
+
+    <div class="quote">
+      "Chúng tôi không chỉ bảo vệ tài sản của khách hàng, mà còn bảo vệ phương pháp luận đầu tư định lượng nghiêm ngặt đã được thị trường kiểm nghiệm trong thời gian dài."
+      <cite>— Tuyên bố công ty AQRC</cite>
+    </div>
+  </section>
+
+  <section id="safehaven">
+    <h2 class="section-title"><span class="num">§ 05</span>Vì sao tập trung vào tài sản trú ẩn</h2>
+    <p class="section-sub">Hai thập kỷ neo vào sự chắc chắn — lý do AQRC chọn phạm vi tài sản hẹp.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Điểm xuất phát của niềm tin (2008)</h4>
+        <p>Trải nghiệm trực tiếp khủng hoảng tài chính 2008 đã thuyết phục Ông Teh Kian Wee rằng trong khủng hoảng tín dụng toàn cầu, chỉ những tài sản như vàng — không dựa vào tín nhiệm của bất kỳ chính phủ nào — mới là người bảo vệ tài sản cuối cùng.</p>
+      </div>
+      <div class="info-card">
+        <h4>Kiểm nghiệm chiến lược (2011 – 2015)</h4>
+        <p>Nghiên cứu định lượng tiếp theo nhiều lần xác nhận tính không thể thay thế của tài sản trú ẩn trong danh mục: phòng vệ lạm phát, đối phó biến động thị trường, cung cấp thanh khoản trong tình huống cực đoan.</p>
+      </div>
+      <div class="info-card">
+        <h4>Khát vọng độc lập ban đầu (2018)</h4>
+        <p>Việc thành lập ASPIRANT TRADE INC nhằm tạo một nền tảng không bị quấy nhiễu để vận hành dài hạn, thuần khiết "logic định lượng cho tài sản trú ẩn" đã trưởng thành này.</p>
+      </div>
+      <div class="info-card">
+        <h4>Sứ mệnh thời đại (Tương lai)</h4>
+        <p>AQRC neo chiến lược vào vàng và bạc — các tài sản cứng mà công ty tin rằng đã đứng vững qua hàng nghìn năm — như nền tảng vững chắc nhất cho lợi nhuận ghép lãi dài hạn của nhà đầu tư.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quant">
+    <h2 class="section-title"><span class="num">§ 06</span>Cách tiếp cận định lượng</h2>
+    <p class="section-sub">Từ "phán đoán con người" sang "sự chắc chắn của tổ chức."</p>
+
+    <h3>Giao dịch định lượng — theo cách AQRC trình bày</h3>
+    <p>Theo tài liệu của AQRC, giao dịch định lượng không dự đoán thị trường mà quản lý sự bất định. Giao dịch truyền thống được mô tả là cảm xúc dẫn dắt, trong khi giao dịch định lượng là xác suất dẫn dắt. Trong thị trường toàn cầu quy mô nghìn tỷ, vận hành xuyên múi giờ, công ty lập luận rằng năng lực cá nhân đơn lẻ không còn cấu thành lợi thế — rủi ro ràng buộc trở thành việc không thể định lượng và ràng buộc toàn bộ hệ thống ra quyết định.</p>
+
+    <h3>Trần của giao dịch tuỳ ý</h3>
+    <p>AQRC chỉ ra ba rủi ro cốt lõi cho vốn theo đuổi ổn định dài hạn: hệ thống ra quyết định không thể định lượng, quy tắc không thể bị ràng buộc, và kinh nghiệm phân mảnh kết hợp biến động cảm xúc. Khi thị trường mở rộng tới quy mô nghìn tỷ và vận hành xuyên múi giờ, biến động và bất định được khuếch đại theo cấp số nhân — biến giao dịch định lượng thành "lựa chọn không thể tránh khỏi" cho vốn dài hạn.</p>
+
+    <h3>Từ "thông minh hơn" sang "đáng tin hơn"</h3>
+    <p>Logic truyền thống dựa vào điều kiện con người (cảm xúc, kinh nghiệm, phán đoán) như nguồn lợi nhuận; logic định lượng của AQRC tách quá trình ra quyết định khỏi sự bất ổn của con người và uỷ thác cho mô hình và cấu trúc xác suất thực thi. Lợi nhuận không còn phụ thuộc vào một phán đoán đúng đơn lẻ mà phụ thuộc vào sự nhất quán của hệ thống dưới các điều kiện thị trường khác nhau — điều công ty gọi là chuyển giao chủ quyền ra quyết định từ con người sang tổ chức.</p>
+
+    <h3>Rủi ro được xác định trước lợi nhuận</h3>
+    <p>AQRC mô tả hệ thống định lượng của mình là mã hoá rủi ro vào hệ thống trước khi chiến lược được thực thi: giới hạn vị thế tối đa, trần drawdown tối đa, cơ chế kiểm soát exposure, và đường giảm vị thế tự động trong kịch bản cực đoan. Lợi nhuận chỉ có thể được tạo ra trong phạm vi mà ngân sách rủi ro cho phép — rủi ro do đó không phải là đối tượng để quản lý, mà là điều kiện tiên quyết để hệ thống vận hành.</p>
+
+    <h3>Các node trong quy trình</h3>
+    <div class="process-row">
+      <div class="process-step">
+        <span class="step-num">Node 01</span>
+        <h4>Nhận diện điều kiện</h4>
+        <p>Khi một cấu trúc nào đó xuất hiện trên thị trường.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Node 02</span>
+        <h4>Xác định ranh giới</h4>
+        <p>Giao dịch được thực hiện dưới ràng buộc rủi ro nào.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Node 03</span>
+        <h4>Xác định quy mô</h4>
+        <p>Kích thước giao dịch cần thực thi.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Node 04</span>
+        <h4>Thực thi tốc độ cao</h4>
+        <p>Tốc độ cần thiết để hoàn tất giao dịch.</p>
+      </div>
+    </div>
+
+    <p>AQRC tóm tắt: "Giao dịch định lượng không trả lời câu hỏi 'Thị trường tiếp theo sẽ tăng hay giảm?', mà trả lời 'Hệ thống sẽ phản ứng thế nào bất kể thị trường thay đổi ra sao?'"</p>
+  </section>
+
+  <section id="system">
+    <h2 class="section-title"><span class="num">§ 07</span>Khung hệ thống định lượng</h2>
+    <p class="section-sub">Lợi nhuận đến từ các cấu trúc lặp lại — và từ một khung chiến lược phối hợp.</p>
+
+    <h3>Ba nhóm nguồn lợi nhuận có cấu trúc</h3>
+    <p>Tài liệu của AQRC nhận diện ba cấu trúc thị trường tái xuất hiện mà hệ thống liên tục giám sát, xem các sai lệch giai đoạn là kết quả tự nhiên của hệ thống tài chính toàn cầu dưới các trạng thái áp lực khác nhau:</p>
+
+    <table>
+      <thead><tr><th>Cấu trúc</th><th>Mô tả</th></tr></thead>
+      <tbody>
+        <tr><td><b>Sai lệch giá theo giai đoạn</b></td><td>Các mẫu hình định giá sai tạm thời lặp lại qua các chu kỳ.</td></tr>
+        <tr><td><b>Bất khớp thanh khoản liên thị trường</b></td><td>Khác biệt điều kiện thanh khoản giữa các thị trường và sàn.</td></tr>
+        <tr><td><b>Mất cân đối mặt biến động</b></td><td>Bất đối xứng trong cấu trúc biến động ngụ ý của các công cụ liên quan.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Hệ thống định lượng trưởng thành như một khung phối hợp</h3>
+    <p>AQRC mô tả hệ thống trưởng thành của mình là sự phối hợp của các lớp chiến lược bổ trợ, trong đó lợi nhuận đến từ vận hành "relay" của các chiến lược qua các chu kỳ khác nhau:</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <h4>Arbitrage giao ngay – tương lai</h4>
+        <p>Cung cấp nguồn chênh lệch giá rủi ro thấp bằng cách khai thác sai biệt giữa giá giao ngay và tương lai.</p>
+      </div>
+      <div class="pillar">
+        <h4>Arbitrage liên thị trường</h4>
+        <p>Cải thiện hiệu quả sử dụng thanh khoản qua nhiều thị trường và múi giờ.</p>
+      </div>
+      <div class="pillar">
+        <h4>Chiến lược cấu trúc biến động</h4>
+        <p>Thu lấy phần bù rủi ro nhúng trong bất đối xứng của mặt biến động.</p>
+      </div>
+      <div class="pillar">
+        <h4>Vận hành relay</h4>
+        <p>Lợi nhuận không phụ thuộc vào trạng thái thị trường đơn lẻ — các chiến lược trao tay qua các chu kỳ.</p>
+      </div>
+    </div>
+
+    <h3>Lợi thế ở chu kỳ dài</h3>
+    <p>AQRC lập luận rằng lợi thế của giao dịch định lượng thuộc về chu kỳ dài: mọi hệ thống dựa vào năng lực cá nhân đều suy giảm theo thời gian. Đường dịch chuyển công ty mô tả là: năng lực chuyển từ con người sang tổ chức; kinh nghiệm chuyển thành quy tắc; trực giác chuyển thành xác suất. Hệ thống định lượng nhờ đó duy trì nhất quán bất chấp luân chuyển nhân sự và thay đổi thị trường.</p>
+
+    <h3>Tiến hoá thể chế của quản lý tài sản</h3>
+    <p>Công ty đặt giao dịch định lượng không chỉ là nâng cấp công nghệ — mà là một sự tiến hoá của các hình thái quản lý tài sản, từ Thời đại Anh hùng (tài năng cá nhân) qua Thời đại Đội ngũ tới Thời đại Hệ thống (vận hành bằng hệ thống). Trong khung này, điều thực sự quan trọng không còn là ai phán đoán xu hướng giỏi hơn, mà là hệ thống của ai vận hành bền vững trong môi trường bất định.</p>
+  </section>
+
+  <section id="compliance">
+    <h2 class="section-title"><span class="num">§ 08</span>Tuân thủ & Quản lý</h2>
+    <p class="section-sub">Cấp phép và khung pháp lý theo công bố của AQRC.</p>
+
+    <p>AQRC công bố tư thế tuân thủ sau đây trong tài liệu công ty. Giấy phép Tài chính US MSB được đăng ký qua Mạng lưới Thực thi Tội phạm Tài chính (FinCEN) thuộc Bộ Tài chính Mỹ, và công ty mời các thành viên tiềm năng tự xác minh đăng ký trực tiếp qua hệ thống tra cứu MSB Registrant Search chính thức của FinCEN.</p>
+
+    <div class="reg-card">
+      <h3>Hồ sơ đăng ký chính thức</h3>
+      <div class="row"><b>Tên pháp lý công ty</b><span>ASPIRANT TRADE INC</span></div>
+      <div class="row"><b>Nơi đăng ký</b><span>Colorado, Mỹ</span></div>
+      <div class="row"><b>Số đăng ký MSB</b><span class="mono">31000323474515</span></div>
+      <div class="row"><b>Cơ quan đăng ký</b><span>FinCEN — Bộ Tài chính Mỹ</span></div>
+      <div class="row"><b>Hệ thống tra cứu công khai</b><span><a href="https://www.fincen.gov/resources/msb-state-selector" target="_blank" rel="noopener">fincen.gov/resources/msb-state-selector</a></span></div>
+      <div class="row"><b>Cách xác minh</b><span>Nhập số đăng ký MSB / DCN <span class="mono">31000323474515</span> trong ô tìm kiếm FinCEN và bấm Search để truy xuất hồ sơ theo thời gian thực.</span></div>
+    </div>
+
+    <h3>Mô hình SMA — Separate Management Account</h3>
+    <p>Theo AQRC, công ty vận hành theo mô hình SMA (Tài khoản Quản lý Tách biệt), tách quyền sở hữu và quyền quản lý vốn nhằm bảo đảm tài sản khách hàng được giữ độc lập và tách biệt.</p>
+
+    <h3>Chuẩn UCITS (2023)</h3>
+    <p>Năm 2023, AQRC ra mắt nhóm sản phẩm quỹ đầu tiên tuân thủ chuẩn UCITS của EU, với mục tiêu công bố là mở rộng quyền tiếp cận cho nhà đầu tư tổ chức và cá nhân châu Âu vào các chiến lược tài sản trú ẩn.</p>
+
+    <h3>Minh bạch nền tảng (kế hoạch)</h3>
+    <p>Công ty cho biết, trong các giai đoạn sau — sau khi tối ưu các chức năng cốt lõi của app — một phần dữ liệu giao dịch sẽ được mã hoá và hiển thị trong backend của app, mở rộng nội dung mà thành viên có thể tự kiểm chứng độc lập.</p>
+  </section>
+
+  <section id="security">
+    <h2 class="section-title"><span class="num">§ 09</span>Ưu thế bảo mật</h2>
+    <p class="section-sub">Tuân thủ, kỹ thuật và bảo vệ tài sản theo mô tả của AQRC.</p>
+
+    <h4>I. Tuân thủ và Quản lý</h4>
+    <p>AQRC nắm giữ giấy phép tài chính US MSB, mô tả mình là tuân thủ và được quản lý. Áp dụng mô hình SMA (Separate Management Account), tách quyền sở hữu và quyền quản lý vốn để bảo đảm tài sản giữ độc lập và an toàn.</p>
+
+    <h4>II. Bảo vệ Kỹ thuật</h4>
+    <p>Nền tảng sử dụng giao thức BEP-20 cho truyền dẫn mã hoá, nhằm ngăn rò rỉ và can thiệp dữ liệu. Lớp giao dịch được hỗ trợ bởi engine giao dịch tốc độ cao 0,03 giây, kết nối với thanh khoản của các ngân hàng đầu tư quốc tế. Áp dụng hệ thống ba lớp cổng rủi ro:</p>
+
+    <div class="process-row">
+      <div class="process-step">
+        <span class="step-num">Cổng 01</span>
+        <h4>Trước sự kiện</h4>
+        <p>Kiểm thử áp lực vị thế và kịch bản trước khi chấp nhận exposure.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Cổng 02</span>
+        <h4>Trong sự kiện</h4>
+        <p>Cách ly rủi ro khi giao dịch hoặc chiến lược đang chạy.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Cổng 03</span>
+        <h4>Sau sự kiện</h4>
+        <p>Cơ chế bảo vệ tự động sau khi sự kiện xảy ra.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Kết quả</span>
+        <h4>Kiểm soát có hệ thống</h4>
+        <p>Rủi ro được kiểm soát có hệ thống suốt vòng đời giao dịch.</p>
+      </div>
+    </div>
+
+    <h4>III. Bảo vệ Tài sản</h4>
+    <p>AQRC mô tả phòng vệ và arbitrage đa dạng hoá xuyên thị trường, bao gồm vàng và trái phiếu kho bạc Mỹ, nhằm làm mượt biến động thị trường. Thưởng vị thế kèm lãi kép nhằm tăng khả năng chống chịu rủi ro, và tài khoản chuyên dụng độc lập được cung cấp như bảo vệ kép cho quyền riêng tư và tài sản.</p>
+  </section>
+
+  <section id="global">
+    <h2 class="section-title"><span class="num">§ 10</span>Dấu chân toàn cầu & Châu Á – Thái Bình Dương</h2>
+    <p class="section-sub">Nơi AQRC hoạt động và nơi các cộng đồng đang hoạt động.</p>
+
+    <h3>Bối cảnh thương hiệu và pháp nhân</h3>
+    <p>AQRC vận hành từ bối cảnh Greenwich, Connecticut — được công ty mô tả là trung tâm ngành quỹ phòng hộ toàn cầu — với pháp nhân ASPIRANT TRADE INC đăng ký tại Colorado, Mỹ.</p>
+
+    <h3>Trung tâm vận hành Châu Á – Thái Bình Dương</h3>
+    <p>Trung tâm vận hành đã được thiết lập tại châu Á, cụ thể tại Hợp Phì, tỉnh An Huy, đặt tại:</p>
+    <div class="quote">
+      Tầng 30, Phoenix Cultural Plaza, Đại lộ Huizhou, Phố Changqing, Quận Baohe, Thành phố Hợp Phì, Tỉnh An Huy, Trung Quốc.
+      <cite>— Trung tâm vận hành Châu Á – Thái Bình Dương của AQRC</cite>
+    </div>
+
+    <h3>Các thành phố cộng đồng đang hoạt động tại Trung Quốc</h3>
+    <p>Ngoài Hợp Phì, AQRC cho biết đã phát triển các thành viên cộng đồng và văn phòng cộng đồng được công ty hỗ trợ tại các thành phố Trung Quốc sau:</p>
+    <div class="city-grid">
+      <div class="city"><span class="label">CN</span>Hohhot</div>
+      <div class="city"><span class="label">CN</span>Hợp Phì</div>
+      <div class="city"><span class="label">CN</span>Quảng Châu</div>
+      <div class="city"><span class="label">CN</span>Wuhu</div>
+      <div class="city"><span class="label">CN</span>Huaihua</div>
+      <div class="city"><span class="label">CN</span>Zibo</div>
+      <div class="city"><span class="label">CN</span>Harbin</div>
+      <div class="city"><span class="label">CN</span>Yancheng</div>
+      <div class="city"><span class="label">CN</span>Huaibei</div>
+      <div class="city"><span class="label">CN</span>Huai'an</div>
+      <div class="city"><span class="label">CN</span>Nanyang</div>
+    </div>
+
+    <p>Công ty tiếp tục kết nối với các thị trường mới và công bố cập nhật thị trường hằng ngày cho từng khu vực qua ứng dụng chat Debox.</p>
+
+    <h3>Truyền thông & công cụ cộng đồng</h3>
+    <p>Thành viên và văn phòng cộng đồng phối hợp hằng ngày qua ứng dụng chat Debox, nơi AQRC công bố cập nhật thị trường khu vực. App chính thức đang được nâng cấp để người dùng dễ dàng chat, lập group chat, gửi USDT red envelopes và xem sự phát triển của thành viên trên các cộng đồng khác nhau.</p>
+  </section>
+
+  <!-- 11 Đăng ký VI -->
+  <section id="registration">
+    <h2 class="section-title"><span class="num">§ 11</span>Đăng ký &amp; Tài khoản</h2>
+    <p class="section-sub">Quy trình tạo tài khoản theo hướng dẫn vận hành chính thức cho người dùng mới của AQRC.</p>
+
+    <p>AQRC cho biết mọi thao tác chỉ được hỗ trợ trên ứng dụng AQRC chính thức trên di động, tải về từ các kênh chính thức được chỉ định. App không có phiên bản web. Mã mời là trường bắt buộc khi đăng ký. Thành viên có thể bắt đầu với mức tối thiểu 100 USD.</p>
+
+    <h3>Các bước đăng ký</h3>
+    <div class="process-row">
+      <div class="process-step">
+        <span class="step-num">Bước 01</span>
+        <h4>Mở App</h4>
+        <p>Nhấn [New User] và nhập email thường dùng.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Bước 02</span>
+        <h4>Username</h4>
+        <p>Đặt username 6–8 ký tự (chữ + số, không trùng).</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Bước 03</span>
+        <h4>Mật khẩu</h4>
+        <p>Đặt mật khẩu 8–21 ký tự (chỉ chữ, số và dấu gạch dưới — không ký tự đặc biệt).</p>
+      </div>
+      <div class="process-step">
+        <span class="step-num">Bước 04</span>
+        <h4>Mã mời</h4>
+        <p>Điền mã mời 6 ký tự (chữ + số, bắt buộc).</p>
+      </div>
+    </div>
+
+    <p>Trượt sang phải để hoàn tất ghép hình CAPTCHA, và tích xác nhận đã đọc và đồng ý Điều khoản Người dùng. Sau khi đăng ký thành công, đăng nhập trực tiếp vào App bằng [Username + Mật khẩu].</p>
+
+    <div class="source-note">
+      <div class="label">Nguồn: Cảnh báo bảo mật của AQRC</div>
+      <p>Nhân viên nền tảng sẽ không bao giờ yêu cầu thông tin nhạy cảm như private key, mật khẩu hoặc mã xác minh.</p>
+    </div>
+  </section>
+
+  <!-- 12 Nạp tiền VI -->
+  <section id="deposit">
+    <h2 class="section-title"><span class="num">§ 12</span>Nạp tiền</h2>
+    <p class="section-sub">Quy trình nạp tài sản số theo tài liệu AQRC.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Token &amp; mạng chấp nhận</h4>
+        <div class="row"><b>Token</b><span>Chỉ USDT (Tether)</span></div>
+        <div class="row"><b>Mạng</b><span>Mặc định khuyến nghị BEP-20 (nhận nhanh, phí thấp)</span></div>
+        <div class="row"><b>Tối thiểu</b><span>100 USD để bắt đầu hành trình định lượng</span></div>
+        <div class="row"><b>Địa chỉ</b><span>Mỗi tài khoản có một địa chỉ nạp riêng do hệ thống tạo</span></div>
+        <div class="row"><b>Ghi nhận</b><span>Hiển thị thời gian thực trong [Available Balance] sau khi blockchain xác nhận</span></div>
+      </div>
+      <div class="info-card">
+        <h4>Các bước nạp</h4>
+        <p>1. Sau khi đăng nhập, nhấn [Wallet] trên trang chủ.</p>
+        <p>2. Nhấn nút [Recharge] màu xanh trên trang "Transfer Operation".</p>
+        <p>3. Xác nhận mạng (BEP-20) và sao chép địa chỉ nạp riêng.</p>
+        <p>4. Chuyển USDT từ ví số / sàn cá nhân tới địa chỉ đó.</p>
+        <p>5. Chờ blockchain xác nhận; tiền sẽ hiển thị trong [Available Balance] theo thời gian thực. Chi tiết nạp xem ở góc trên bên phải.</p>
+      </div>
+    </div>
+
+    <div class="source-note">
+      <div class="label">Nguồn: Lưu ý vận hành của AQRC (nguyên văn)</div>
+      <p>Hãy đảm bảo mạng và địa chỉ khớp nhau, nếu không tiền không thể thu hồi.</p>
+    </div>
+  </section>
+
+  <!-- 13 Gói đầu tư VI -->
+  <section id="packages">
+    <h2 class="section-title"><span class="num">§ 13</span>Gói đầu tư</h2>
+    <p class="section-sub">Tám gói tài sản được AQRC công bố trong hướng dẫn vận hành chính thức cho người dùng mới.</p>
+
+    <p>AQRC cung cấp tám gói tài sản với các kỳ hạn khoá vốn khác nhau, các tham số cốt lõi (kỳ hạn / lãi ngày dự kiến / thưởng vị thế) được hiển thị rõ. Công ty khuyến nghị người dùng mới chọn các gói ngắn hạn trước.</p>
+
+    <h3>Ma trận sản phẩm &amp; lợi nhuận dự kiến</h3>
+    <table>
+      <thead>
+        <tr><th>Tên gói</th><th>Kỳ hạn khoá vốn</th><th>Lãi ngày dự kiến</th><th>APY ghép lãi (tham khảo)</th><th>Thưởng vị thế</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cash Type</td><td>Linh hoạt ra/vào</td><td class="mono">0,1% – 0,3%</td><td class="mono">44% – 199%</td><td>Không</td></tr>
+        <tr><td>Inflation Hedge Type</td><td>30 ngày</td><td class="mono">0,4% – 0,6%</td><td class="mono">330% – 793%</td><td>Không</td></tr>
+        <tr><td>Precious Metal Type</td><td>60 ngày</td><td class="mono">0,5% – 0,8%</td><td class="mono">520% – 1.750%</td><td>Không</td></tr>
+        <tr><td>Volatility Arbitrage Type</td><td>90 ngày</td><td class="mono">0,6% – 1,0%</td><td class="mono">793% – 3.750%</td><td>5%</td></tr>
+        <tr><td>Capital Efficiency Enhanced Type</td><td>180 ngày</td><td class="mono">0,7% – 1,1%</td><td class="mono">1.187% – 5.440%</td><td>10%</td></tr>
+        <tr><td>Institutional Flagship All-in-One Type</td><td>360 ngày</td><td class="mono">0,8% – 1,3%</td><td class="mono">1.750% – 11.450%</td><td>15%</td></tr>
+        <tr><td>Composite Capital All-in-One Type</td><td>540 ngày</td><td class="mono">0,9% – 1,5%</td><td class="mono">2.570% – 23.800%</td><td>20%</td></tr>
+        <tr><td>Sovereign Alpha Matrix</td><td>1.080 ngày</td><td class="mono">1,0% – 1,8%</td><td class="mono">3.750% – 71.200%</td><td>20%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Cách pledge</h3>
+    <ol>
+      <li>Từ trang chủ App, nhấn [Plans] và chọn một gói tài sản trong mục "Quantitative Asset Portfolio".</li>
+      <li>Nhấn vào gói đã chọn để xem tỷ trọng danh mục đầu tư và lời nhắc rủi ro.</li>
+      <li>Nhập số tiền pledge (tối thiểu 100 USD, trong phạm vi số dư khả dụng).</li>
+      <li>Hệ thống tự động tính thưởng vị thế (tối đa 20%).</li>
+      <li>Xác nhận thông tin và nhấn [Pledge Now]. Tiền sẽ bị khoá, và việc tính lãi bắt đầu từ ngày hôm sau.</li>
+    </ol>
+
+    <h3>Quy tắc tất toán</h3>
+    <p>Trừ Cash Type (linh hoạt ra/vào), các gói tài sản khác không hỗ trợ tất toán trước hạn. AQRC khuyến nghị chọn kỳ hạn dựa trên kế hoạch sử dụng vốn của bạn.</p>
+
+    <div class="source-note">
+      <div class="label">Nguồn: Công bố rủi ro của AQRC (nguyên văn)</div>
+      <p><b>Đầu tư có rủi ro, hãy ra quyết định thận trọng.</b> Quant arbitrage không phải sản phẩm bảo toàn vốn và lợi nhuận cố định. Mặc dù rủi ro tương đối thấp, biến động thị trường vẫn có thể gây thua lỗ. Hãy hoạch định mức đầu tư hợp lý theo khả năng chịu rủi ro của bạn, và đừng đầu tư vượt quá khả năng chịu đựng. Vui lòng đảm bảo tải App và vận hành qua các kênh chính thức, cảnh giác với các website lừa đảo (phishing) và các hoạt động gian lận, và bảo vệ an toàn của tài khoản cũng như nguồn vốn của bạn.</p>
+    </div>
+  </section>
+
+  <!-- 14 Lợi nhuận & Rút tiền VI -->
+  <section id="earnings">
+    <h2 class="section-title"><span class="num">§ 14</span>Lợi nhuận, Lãi kép &amp; Rút tiền</h2>
+    <p class="section-sub">Theo dõi lợi nhuận, cơ chế lãi kép, quy trình chuyển và rút tiền.</p>
+
+    <h3>Theo dõi lợi nhuận</h3>
+    <ul>
+      <li><b>Tổng quan tài khoản:</b> Nhấn [Track] ở thanh điều hướng dưới để xem ước tính tổng tài sản, biến động lợi nhuận hôm nay và số ngày khoá còn lại theo thời gian thực.</li>
+      <li><b>Chi tiết pledge:</b> Nhấn vào danh mục tương ứng trên trang [Track] để xem tỷ trọng phân bổ sản phẩm, xếp hạng ESG và lãi/lỗ luỹ kế.</li>
+      <li><b>Chi tiết dòng tiền:</b> Vào [Wallet] trên trang chủ để xem toàn bộ lịch sử giao dịch.</li>
+    </ul>
+
+    <h3>Cơ chế lãi kép tự động</h3>
+    <p>Hệ thống bật chế độ lãi kép tự động theo mặc định. <b>Nếu phần lãi premium hằng ngày không được rút thủ công, nó sẽ được tự động cộng vào vốn gốc vào ngày hôm sau để tiếp tục tham gia quant arbitrage — pledge càng lâu, tốc độ tăng trưởng ghép lãi càng cao.</b></p>
+    <p><b>Sau khi rút bất kỳ khoản lãi nào, cơ chế lãi kép sẽ bị huỷ tự động, và chỉ vốn gốc ban đầu + thưởng tiếp tục tạo lợi nhuận về sau.</b></p>
+
+    <h3>Chuyển khoản &amp; rút tiền</h3>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Chuyển khoản nội bộ</h4>
+        <p>Nhấn [Transfer] trên trang [Track] để chuyển tiền giữa "Plan Account" và "Wallet Account".</p>
+        <p><b>Phí xử lý 5% được tính cho việc chuyển ra (rút sớm) trước ngày đáo hạn.</b> Vốn gốc được tự động giải toả khi đáo hạn.</p>
+      </div>
+      <div class="info-card">
+        <h4>Rút tiền ra ngoài</h4>
+        <p>Vào [Trang chủ] → [Wallet] → [Withdraw], chọn mạng (BEP-20), nhập số tiền và địa chỉ ví cá nhân của bạn.</p>
+        <p>Hệ thống xử lý yêu cầu tự động, tiền thường về trong vòng vài phút.</p>
+      </div>
+    </div>
+
+    <h3>Tổng hợp phí (theo công bố)</h3>
+    <table>
+      <thead><tr><th>Hành động</th><th>Phí</th><th>Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td>Rút sớm (chuyển ra trước đáo hạn)</td><td class="mono">5%</td><td>Phí xử lý trên phần vốn gốc chuyển ra trước khi hết khoá vốn.</td></tr>
+        <tr><td>Rút tại / sau khi đáo hạn</td><td class="mono">0%</td><td>Không phí xử lý khi rút vốn gốc và lãi sau khi kết thúc kỳ pledge.</td></tr>
+        <tr><td>Rút bất kỳ khoản lãi nào</td><td>—</td><td>Theo AQRC: cơ chế lãi kép bị huỷ tự động; chỉ vốn gốc ban đầu + thưởng tiếp tục tạo lợi nhuận về sau.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>FAQ (từ hướng dẫn AQRC công bố)</h3>
+    <ul>
+      <li><b>Quên mật khẩu:</b> Nhấn [Forgot Password] trên trang đăng nhập, nhập email đã đăng ký, đặt lại sau khi nhận mã xác minh. Không cần duyệt thủ công.</li>
+      <li><b>Rút thưởng vị thế:</b> Thưởng vị thế được cộng vào vốn gốc để tham gia tính lãi, và có thể rút cùng vốn gốc và lãi sau khi thoả mãn quy tắc pledge.</li>
+      <li><b>Tất toán sớm:</b> Không hỗ trợ ngoại trừ Cash Type.</li>
+      <li><b>Chi tiết gói tài sản:</b> Nhấn vào gói tương ứng trong [Plans] để xem tỷ trọng phân bổ cụ thể (ví dụ vàng / US Treasuries / TIPS, v.v.), định vị chiến lược và lời nhắc rủi ro.</li>
+    </ul>
+  </section>
+
+  <!-- 15 Đội nhóm VI -->
+  <section id="team">
+    <h2 class="section-title"><span class="num">§ 15</span>Đội nhóm &amp; Giới thiệu</h2>
+    <p class="section-sub">Mời thành viên, ràng buộc đội nhóm, bảng điều khiển và các tính năng bổ sung trong App.</p>
+
+    <h3>Mời thành viên</h3>
+    <ol>
+      <li>Vào [My Page] → [Invite Friends].</li>
+      <li>Sao chép mã mời riêng 6 ký tự hoặc lưu mã QR mời.</li>
+      <li>Khi bạn bè đăng ký qua mã / QR của bạn và hoàn tất nạp + pledge, <b>họ trở thành thành viên đội nhóm của bạn, và ràng buộc này là vĩnh viễn sau khi hoàn tất.</b></li>
+    </ol>
+
+    <h3>Bảng dữ liệu đội nhóm</h3>
+    <p>Vào [My Page] → [Market View] để xem:</p>
+    <ul>
+      <li>Tổng số tiền pledge của đội nhóm, thành viên mới, đầu tư mới hôm nay;</li>
+      <li>Chi tiết hiệu suất "big market / small market", số broker trong đội nhóm;</li>
+      <li>Dữ liệu thời gian thực như <b>hierarchical earnings, broker earnings và partner dividends.</b></li>
+    </ul>
+
+    <p>Tham chiếu <a href="#markets">§16 Chiến lược thị trường &amp; khu vực</a>: module quản lý khách hàng CRM nội bộ trong APP — chỉ hiển thị cho đối tác cao cấp — theo dõi tỷ lệ giữ chân tiền nạp và đường cong tăng trưởng kép của <b>đội nhóm 15 thế hệ</b>.</p>
+
+    <h3>Cài đặt cơ bản trong Personal Center</h3>
+    <ul>
+      <li><b>Đổi username:</b> [My Page] → [Change Username] — đặt lại bằng tổ hợp chữ và số.</li>
+      <li><b>Đổi mật khẩu:</b> [My Page] → [Change Password] — nhận mã xác minh qua email đã đăng ký.</li>
+      <li><b>Ngôn ngữ hỗ trợ:</b> Tiếng Trung, Anh, Nhật, Hàn, Tây Ban Nha.</li>
+      <li><b>Đơn vị niêm yết giá:</b> USD / CNY / EUR / USDT.</li>
+      <li><b>Thông báo:</b> Bật [Message Notifications] để nhận thông báo nền tảng và cảnh báo lợi nhuận.</li>
+    </ul>
+
+    <h3>Tính năng bổ sung trong App</h3>
+    <h4>Giám sát thị trường toàn cầu theo thời gian thực</h4>
+    <p>Nhấn [Market] ở thanh điều hướng dưới. Chuyển giữa Popular Products, Commodities (Vàng / Dầu thô / Khí tự nhiên / Đồng), Forex, Stocks và Indices. Hiển thị giá mới nhất, biến động 24 giờ và khối lượng giao dịch; bảng điều khiển thị trường cho thấy động lực của thị trường trú ẩn 12,8 nghìn tỷ USD.</p>
+
+    <h4>EA Demo</h4>
+    <p>Nhấn [EA Demo] trên [Trang chủ]. Giám sát biến động spread vàng theo thời gian thực trên hơn 10 nền tảng toàn cầu hàng đầu và xem lịch sử các giao dịch 0,03 giây của hệ thống.</p>
+
+    <h4>Thẻ tín dụng VISA</h4>
+    <p>Nhấn [Credit Card] trên [Trang chủ]. Người dùng tự nộp đơn (điền thông tin → duyệt thông tin → giao thẻ vật lý). Lợi nhuận định lượng có thể chuyển vào thẻ để chi tiêu tại 40 triệu điểm bán toàn cầu và rút tiền mặt tại ATM.</p>
+  </section>
+
+  <!-- 16 Markets VI -->
+  <section id="markets">
+    <h2 class="section-title"><span class="num">§ 16</span>Chiến lược thị trường &amp; khu vực</h2>
+    <p class="section-sub">Kế hoạch thực thi khu vực được AQRC công bố — Đông Bắc Á, Đông Nam Á và lộ trình chuyển đổi khách hàng cao cấp.</p>
+
+    <p>AQRC công bố kế hoạch thực thi khu vực được tổ chức xoay quanh các mốc theo quý và mô hình studio cộng đồng phân cấp. Kế hoạch xác định Nhật Bản và Hàn Quốc là khu vực lợi nhuận cốt lõi cho mở rộng nước ngoài, Việt Nam và Malaysia là các thị trường tăng trưởng tại Đông Nam Á, cùng với hệ thống chỉ huy theo lưới (grid) cho vận hành cộng đồng.</p>
+
+    <h3>Q3 — Đông Bắc Á (Nhật Bản &amp; Hàn Quốc)</h3>
+    <p>Sau hội nghị ra mắt toàn cầu, Nhật Bản và Hàn Quốc được kỳ vọng là các khu vực lợi nhuận cốt lõi cho mở rộng nước ngoài. Tại thị trường Nhật Bản, chương trình ươm tạo ma trận KOL sẽ được khởi động, tận dụng cộng đồng riêng tư trên Line để thâm nhập có mục tiêu vào khách hàng cao cấp. Tại thị trường Hàn Quốc, áp dụng định dạng các buổi chia sẻ đầu tư riêng tư, bỏ qua mô hình quảng bá truyền thống, và thành lập uỷ ban vận hành bản địa gồm các chuyên gia tài chính cao cấp từ Seoul và Busan.</p>
+
+    <h4>Hỗ trợ sản phẩm — Đông Bắc Á</h4>
+    <ul>
+      <li>Giao diện người dùng đơn giản hoá ra mắt cho người dùng Nhật và Hàn.</li>
+      <li>Gói tài sản phòng vệ động dành riêng cho múi giờ châu Á triển khai theo cơ chế gray-scale.</li>
+      <li>Thiết lập kênh OTC chuyên dụng nhận nạp tiền pháp định cho K-VVIPs, đảm bảo trải nghiệm dòng vốn lớn ra/vào trơn tru.</li>
+    </ul>
+
+    <h3>Q3 — Đông Nam Á (Việt Nam &amp; Malaysia)</h3>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Thị trường Việt Nam</h4>
+        <p>Tập trung vào tăng trưởng cộng đồng bùng nổ cao, đội thực thi sẽ mở rộng tới <b>TP. Hồ Chí Minh, Hà Nội, Đà Nẵng</b> và các khu vực quảng bá tuyến đầu khác, nhanh chóng thu hút lưu lượng long-tail thông qua các sự kiện quảng bá nhỏ và vừa diễn ra thường xuyên, kèm truyền thông tổng thể.</p>
+      </div>
+      <div class="info-card">
+        <h4>Thị trường Malaysia</h4>
+        <p>Tận dụng mạng lưới các phòng thương mại Trung Quốc tại <b>Penang và Kuala Lumpur</b> để mở rộng kinh doanh cao cấp, tập trung phát triển hệ thống đối tác chủ yếu là người Hoa.</p>
+      </div>
+    </div>
+
+    <h3>Củng cố nền tảng châu Á — Hệ thống chỉ huy theo lưới (grid)</h3>
+    <p>Tiếp tục triển khai hệ thống chỉ huy theo lưới tại Trung Quốc, Nhật Bản, Hàn Quốc và Đông Nam Á, hoàn thành niêm yết hàng chục studio cộng đồng đạt chuẩn cao. Studio được quản lý theo hệ thống ba cấp (A, B, C), trong đó studio cấp A được trang bị nhân viên phân tích chiến lược chuyên trách do nền tảng cử đến hỗ trợ tại chỗ.</p>
+
+    <h4>Nâng cấp chuyển đổi</h4>
+    <p>Studio được nâng cấp toàn diện để trở thành trung tâm chuyển đổi khách hàng cao cấp. Nhiều sự kiện độc quyền tại yacht club và golf wealth salon, dành riêng cho các đối tác cao cấp, được tổ chức chung tại Trung Quốc và Đông Nam Á. Thông qua các bối cảnh xã hội offline cao cấp, mục tiêu công bố là chuyển đổi từ nạp tiền lẻ vài chục nghìn USD lên nạp tiền cấp tổ chức hàng triệu USD mỗi giao dịch, thúc đẩy bước nhảy theo từng cấp về quy mô tài sản quản lý tổng thể.</p>
+
+    <h4>Hỗ trợ sản phẩm — Nền tảng châu Á</h4>
+    <p>Một module quản lý khách hàng CRM nội bộ, chỉ hiển thị cho các đối tác cao cấp, được tích hợp trong APP, giúp lãnh đạo bán hàng theo dõi chính xác tỷ lệ giữ chân tiền nạp và đường cong tăng trưởng kép của <b>đội nhóm 15 thế hệ</b>, cải thiện đáng kể hiệu quả quản lý đội ngũ.</p>
+
+    <h3>Q4 — Nâng cấp sản phẩm và đột phá vào thị trường cao cấp</h3>
+    <p>Thành lập đội chuyên trách dịch vụ family office cho khu vực Châu Á – Thái Bình Dương để triển khai đầy đủ marketing theo vòng tròn (circle-based) chính xác. Phối hợp với các kiến trúc sư trust offshore, công ty hướng tới cung cấp cho khách hàng cao cấp có tài sản hàng chục triệu USD các giải pháp khép kín cho đầu tư nước ngoài và phân bổ tài sản phòng vệ. Cuối năm, tổ chức hội nghị thường niên về tài sản phòng vệ, chỉ theo lời mời, tại các private club cao cấp tại Hồng Kông hoặc Singapore để bảo đảm khách hàng chiến lược cho năm sau.</p>
+
+    <h4>Tiến hoá sản phẩm</h4>
+    <p>Dựa trên phản hồi từ người dùng cốt lõi trong ba quý đầu, dashboard chuyên nghiệp cấp tổ chức <b>AQRC Pro</b> được ra mắt. Phiên bản này yêu cầu giá trị tài sản ròng của tài khoản đạt một ngưỡng nhất định để mở khoá và cung cấp các heatmap chi tiết hơn về nắm giữ tài sản nền và báo cáo lợi nhuận định lượng được trực quan hoá.</p>
+
+    <h4>Dịch vụ tuỳ chỉnh cho khách hàng siêu cao cấp</h4>
+    <p>Đối với cá nhân siêu cao cấp, AQRC ra mắt phiên bản tuỳ chỉnh <b>Sovereign Alpha Matrix+</b>. Phiên bản này cho phép khách hàng tuỳ chỉnh kỳ hạn khoá vốn và mức exposure rủi ro trong một phạm vi nhất định, kèm dịch vụ khách hàng và hỗ trợ chiến lược 1-1 chuyên dụng, hoàn toàn đột phá từ wealth management đại chúng lên asset management cao cấp.</p>
+  </section>
+
+  <section id="vision">
+    <h2 class="section-title"><span class="num">§ 17</span>Tầm nhìn & Lộ trình</h2>
+    <p class="section-sub">Nơi AQRC nói mình sẽ đi tiếp.</p>
+
+    <h3>Mở rộng vào Việt Nam và Đông Nam Á</h3>
+    <p>AQRC cho biết việc mở rộng vào nhiều quốc gia hơn — bao gồm Việt Nam — là một phần của chuẩn bị cho kế hoạch IPO Nasdaq năm 2029 hoặc 2030. Mặc dù pháp nhân mẹ đã được đăng ký sớm từ năm 2018, AQRC bắt đầu vận hành từ năm 2019, với tài sản quản lý công bố ở mức 187 tỷ USD phục vụ các định chế tài chính và tập đoàn. Cơ sở người dùng đủ lớn được mô tả là điều kiện tiên quyết cho kế hoạch IPO, thúc đẩy kế hoạch công bố mở thị trường châu Á và Đông Nam Á đến năm 2025.</p>
+
+    <h3>Trạng thái hệ thống</h3>
+    <p>Ngày 14/4/2026, hệ thống bắt đầu nhận đăng ký. Hệ thống được mô tả là vẫn đang ở giai đoạn thử nghiệm nội bộ, với nhiều chức năng chưa hoàn thiện. Chức năng chat thành viên và group chat dự kiến hoàn thành vào cuối tháng 5. Các tính năng khác đang chuẩn bị bao gồm kích hoạt hợp đồng giao dịch, chức năng đăng ký U-card, và chức năng U-card shopping mall.</p>
+
+    <h3>Giai đoạn của dự án</h3>
+    <p>AQRC mô tả mình hiện đang ở giai đoạn rất sớm, làm việc với các trưởng nhóm và thành viên cốt lõi của nhiều quốc gia và cộng đồng để cùng phát triển và xây dựng thương hiệu và danh tiếng arbitrage định lượng.</p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Các mốc dự kiến</h4>
+        <div class="row"><b>2025</b><span>Mở thị trường châu Á và Đông Nam Á</span></div>
+        <div class="row"><b>14/4/2026</b><span>Hệ thống mở đăng ký (giai đoạn thử nghiệm nội bộ)</span></div>
+        <div class="row"><b>Cuối T5/2026</b><span>Hoàn thành chat thành viên và group chat (kế hoạch)</span></div>
+        <div class="row"><b>Sắp tới</b><span>Hợp đồng giao dịch; đăng ký U-card; U-card shopping mall</span></div>
+        <div class="row"><b>2029 / 2030</b><span>Mục tiêu IPO Nasdaq</span></div>
+      </div>
+      <div class="info-card">
+        <h4>Định vị công bố</h4>
+        <div class="row"><b>Hoạt động từ</b><span>2019</span></div>
+        <div class="row"><b>AUM công bố</b><span>187 tỷ USD</span></div>
+        <div class="row"><b>Khách hàng công bố</b><span>Định chế tài chính và tập đoàn</span></div>
+        <div class="row"><b>Giai đoạn thương hiệu</b><span>Giai đoạn rất sớm — xây dựng cộng đồng / đối tác</span></div>
+        <div class="row"><b>Mô hình hợp tác</b><span>Trưởng nhóm quốc gia và thành viên cộng đồng cốt lõi</span></div>
+      </div>
+    </div>
+
+    <h3>Tầm nhìn dài hạn</h3>
+    <p>AQRC mô tả tầm nhìn dài hạn của mình là xây dựng một trung tâm đầu tư định lượng cho tài sản trú ẩn — toàn cầu, có thể kiểm toán, có thể xác minh, xuyên chu kỳ kinh tế và đáng tin cậy dài hạn.</p>
+
+    <h3>Lộ trình theo năm 2027 — 2030</h3>
+
+    <div class="timeline">
+      <div class="entry">
+        <div class="year">2027</div>
+        <h4>Mở rộng tuân thủ tại châu Âu, Mỹ &amp; trao quyền cho global business school</h4>
+        <p>Trên nền tảng giấy phép US MSB, công ty dự kiến lần lượt tiến hành các đơn đăng ký tuân thủ pháp lý tại châu Âu và Trung Đông, khởi động vận hành bản địa tại thị trường châu Âu và Mỹ. Mạng lưới bán hàng tuyến đầu hiện có được nâng cấp thành hệ thống global business school, đào tạo theo lô các chuyên viên marketing định lượng trên toàn cầu qua các khoá video chuẩn hoá và các buổi giảng offline của giảng viên nổi tiếng — nâng cấp mô hình thu hút khách hàng từ giới thiệu sang đào tạo có hệ thống. Quy mô kỳ vọng: cơ sở người dùng hoạt động và tài sản quản lý của nền tảng vào nhóm dẫn đầu ngành.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2028</div>
+        <h4>Cross-cycle giants &amp; đa dạng hoá tài sản nền</h4>
+        <p>Ngoài kim loại quý truyền thống và trái phiếu kho bạc Mỹ, nhiều lớp tài sản trú ẩn có tương quan thấp khác sẽ được đưa vào để làm phong phú thêm ma trận arbitrage nền và tăng khả năng chống chịu cũng như lợi nhuận của sản phẩm trong môi trường vĩ mô cực đoan toàn cầu. Nâng cấp thương hiệu: củng cố hình ảnh AQRC như chuyên gia dẫn đầu về tài sản phòng vệ định lượng thông qua tài trợ các hội nghị tài chính toàn cầu và xuất bản các white paper nghiên cứu ngành.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2029</div>
+        <h4>Mở rộng dịch vụ tổ chức và mở hệ sinh thái</h4>
+        <p>Tận dụng quỹ vốn và mô hình định lượng của AQRC, công ty dự kiến ra mắt mảng kinh doanh doanh nghiệp — cung cấp chiến lược định lượng và dịch vụ quản lý thanh khoản cho các định chế tài chính truyền thống và quỹ tín thác khác — đạt được sự mở rộng từ nhà đầu tư cá nhân sang các tổ chức doanh nghiệp.</p>
+      </div>
+      <div class="entry">
+        <div class="year">2030</div>
+        <h4>Vốn hoá và làm chủ hệ sinh thái</h4>
+        <p>Công ty hoạch định các hoạt động vốn hoá, bao gồm niêm yết công ty mẹ trên thị trường vốn truyền thống, cung cấp con đường hiện thực hoá giá trị rộng hơn cho các đối tác cốt lõi giai đoạn đầu và các trưởng nhóm phát triển. Hình thái cuối cùng được công bố: hoàn tất chuyển đổi tối hậu từ một sản phẩm wealth management định lượng đơn lẻ thành hạ tầng đầu tư xuyên chu kỳ cho tài sản phòng vệ toàn cầu.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="verification">
+    <h2 class="section-title"><span class="num">§ 18</span>Kiểm tra & Liên hệ</h2>
+    <p class="section-sub">Cách xác minh đăng ký tuân thủ của AQRC và kết nối với đội ngũ.</p>
+
+    <h3>Xác minh đăng ký MSB trong 4 bước</h3>
+    <ol>
+      <li>Mở hệ thống tra cứu chính thức của FinCEN, Chính phủ Mỹ: <a href="https://www.fincen.gov/resources/msb-state-selector" target="_blank" rel="noopener">fincen.gov/resources/msb-state-selector</a>.</li>
+      <li>Trên trang tìm kiếm, tìm trường có nhãn <b>"MSB Registration Number / DCN"</b>.</li>
+      <li>Nhập số đăng ký: <b><span style="font-family:'JetBrains Mono',monospace">31000323474515</span></b> (tránh sai chính tả).</li>
+      <li>Bấm nút <b>Search</b> ở cuối — hệ thống truy xuất hồ sơ theo thời gian thực.</li>
+    </ol>
+
+    <div class="source-note">
+      <div class="label">Hồ sơ công khai</div>
+      <p>Bản ghi tương ứng sẽ hiển thị: <b>Tên pháp lý công ty: ASPIRANT TRADE INC · Số đăng ký MSB: 31000323474515 · Nơi đăng ký: Colorado, Mỹ.</b></p>
+    </div>
+
+    <h3>Gặp CEO</h3>
+    <p>Công ty cho biết có thể sắp xếp cuộc họp Zoom với Tổng Giám đốc Ông Teh Kian Wee theo yêu cầu, dành cho thành viên tiềm năng nghiêm túc, đối tác và trưởng cộng đồng, để trao đổi trực tiếp về bối cảnh công ty, phương pháp luận và cơ hội hợp tác.</p>
+
+    <h3>Trao đổi thị trường hằng ngày</h3>
+    <p>Cập nhật thị trường khu vực và trao đổi cộng đồng hằng ngày được thực hiện qua ứng dụng chat Debox. Trưởng nhóm các quốc gia và văn phòng cộng đồng phối hợp với đội ngũ AQRC trung tâm qua kênh này.</p>
+  </section>
+
+  <div class="source-note">
+    <div class="label">Ghi chú nguồn</div>
+    <p>Nội dung của tài liệu này được tổng hợp từ các tài liệu do AQRC công bố, bao gồm bộ slide bối cảnh và triết lý nhà sáng lập, bộ giải thích "What is Quantitative Trading", và bản ghi nhớ thông tin công ty kèm chi tiết tra cứu FinCEN MSB. Bạn đọc được khuyến khích xác minh từng tuyên bố trực tiếp qua link FinCEN ở trên và qua liên lạc trực tiếp với công ty.</p>
+  </div>
+
+</main>
+
+<footer>
+  AQRC General Information · Biên soạn từ tài liệu công ty công bố · <span style="color:var(--accent)">© 2026</span>
+</footer>
+
+</div>
+
+<script>
+  function setLang(lang){
+    document.body.classList.toggle('vi', lang === 'vi');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.menu-group.open').forEach(g => g.classList.remove('open'));
+    try{ localStorage.setItem('aqrc_lang', lang); }catch(e){}
+  }
+  (function init(){
+    try{
+      const saved = localStorage.getItem('aqrc_lang');
+      if(saved === 'vi') setLang('vi');
+    }catch(e){}
+  })();
+
+  // Compute sticky-header offset so target headings aren't hidden behind nav + menu
+  function getStickyOffset(){
+    const topbar = document.querySelector('.topbar');
+    const menus = document.querySelectorAll('.menu');
+    let h = 0;
+    if(topbar) h += topbar.offsetHeight;
+    menus.forEach(m => { if(m.offsetParent !== null) h += m.offsetHeight; });
+    return h + 16;
+  }
+
+  // Scroll to the currently visible section (handles duplicate IDs across EN/VI)
+  function scrollToVisibleSection(id){
+    const targets = document.querySelectorAll('#' + id);
+    let visible = null;
+    targets.forEach(t => { if(t.offsetParent !== null) visible = t; });
+    if(visible){
+      const top = visible.getBoundingClientRect().top + window.scrollY - getStickyOffset();
+      window.scrollTo({top: top, behavior: 'smooth'});
+    }
+  }
+
+  // Single delegated click handler for menu/dropdown interactions
+  document.addEventListener('click', function(e){
+    // 1) Dropdown link clicked → scroll + close dropdown
+    const link = e.target.closest('.dropdown a');
+    if(link){
+      const href = link.getAttribute('href');
+      if(href && href.charAt(0) === '#'){
+        e.preventDefault();
+        scrollToVisibleSection(href.slice(1));
+        try{ history.replaceState(null, '', href); }catch(err){}
+        document.querySelectorAll('.menu-group.open').forEach(g => g.classList.remove('open'));
+      }
+      return;
+    }
+    // 2) Trigger button clicked → toggle this dropdown, close others
+    const trigger = e.target.closest('.menu-trigger');
+    if(trigger){
+      e.stopPropagation();
+      const group = trigger.closest('.menu-group');
+      const wasOpen = group.classList.contains('open');
+      document.querySelectorAll('.menu-group.open').forEach(g => g.classList.remove('open'));
+      if(!wasOpen) group.classList.add('open');
+      return;
+    }
+    // 3) Click anywhere outside → close any open dropdown
+    if(!e.target.closest('.menu-group')){
+      document.querySelectorAll('.menu-group.open').forEach(g => g.classList.remove('open'));
+    }
+  });
+
+  // Close dropdowns on Escape
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.menu-group.open').forEach(g => g.classList.remove('open'));
+    }
+  });
+
+  // Scroll spy — marks the current dropdown link active and flags its parent group
+  (function setupScrollSpy(){
+    function update(){
+      const sections = document.querySelectorAll('main section[id]');
+      let current = '';
+      const trigger = getStickyOffset() + 20;
+      sections.forEach(s => {
+        if(s.offsetParent === null) return; // skip hidden language version
+        const top = s.getBoundingClientRect().top;
+        if(top <= trigger) current = s.id;
+      });
+      document.querySelectorAll('.dropdown a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+      document.querySelectorAll('.menu-group').forEach(g => {
+        g.classList.toggle('has-active', g.querySelector('.dropdown a.active') !== null);
+      });
+    }
+    window.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update, {passive:true});
+    update();
+  })();
+</script>
+
+</body>
+</html>
